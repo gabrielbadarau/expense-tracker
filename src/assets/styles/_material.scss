@@ -1,0 +1,143 @@
+@use '@angular/material' as mat;
+
+$primary-palette: (
+  50: #f3f5f1,
+  100: #e2e7dc,
+  200: #ced7c4,
+  300: #bac7ac,
+  400: #acbb9b,
+  500: #9daf89,
+  600: #95a881,
+  700: #8b9f76,
+  800: #81966c,
+  900: #6f8659,
+  A100: #f8fff1,
+  A200: #deffbe,
+  A400: #c4ff8b,
+  A700: #b6ff71,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+$accent-palette: (
+  50: #f3f1f5,
+  100: #e1dce7,
+  200: #cdc4d7,
+  300: #b9acc7,
+  400: #aa9bbb,
+  500: #9b89af,
+  600: #9381a8,
+  700: #89769f,
+  800: #7f6c96,
+  900: #6d5986,
+  A100: #f7f1ff,
+  A200: #dbbeff,
+  A400: #bf8bff,
+  A700: #b071ff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+$error-palette: (
+  50: #fceeee,
+  100: #f7d5d5,
+  200: #f2b9b9,
+  300: #ed9d9d,
+  400: #e98888,
+  500: #e57373,
+  600: #e26b6b,
+  700: #de6060,
+  800: #da5656,
+  900: #d34343,
+  A100: #ffffff,
+  A200: #fff3f3,
+  A400: #ffc0c0,
+  A700: #ffa7a7,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$typography-config: mat.define-typography-config(
+  $font-family: 'Inter, "Helvetica Neue", sans-serif',
+  $headline-4:
+    mat.define-typography-level(112px, 112px, 300, $letter-spacing: -0.05em),
+  $headline-3:
+    mat.define-typography-level(56px, 56px, 400, $letter-spacing: -0.02em),
+  $headline-2:
+    mat.define-typography-level(45px, 48px, 400, $letter-spacing: -0.005em),
+  $headline-1: mat.define-typography-level(34px, 40px, 400),
+  $headline-5: mat.define-typography-level(24px, 32px, 400),
+  $headline-6: mat.define-typography-level(20px, 32px, 500),
+  $subtitle-1: mat.define-typography-level(16px, 28px, 400),
+  $subtitle-2: mat.define-typography-level(15px, 24px, 400),
+  $body-2: mat.define-typography-level(14px, 24px, 500),
+  $body-1: mat.define-typography-level(14px, 20px, 400),
+  $caption: mat.define-typography-level(12px, 20px, 400),
+  $button: mat.define-typography-level(14px, 14px, 400),
+);
+
+$primary: mat.define-palette($primary-palette, 500);
+$accent: mat.define-palette($accent-palette, 500);
+$warn: mat.define-palette($error-palette, 500);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn,
+    ),
+    typography: $typography-config,
+  )
+);
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($light-theme);
