@@ -13,9 +13,10 @@ import { MaterialModule } from './modules/material-module/material.module';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { DomPortalComponent } from './shared/components/dom-portal/dom-portal.component';
 
 @NgModule({
-  declarations: [AppComponent, RegisterComponent, LoginComponent, ResetPasswordComponent],
+  declarations: [AppComponent, RegisterComponent, LoginComponent, ResetPasswordComponent, DomPortalComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,

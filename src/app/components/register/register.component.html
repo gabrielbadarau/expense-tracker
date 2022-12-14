@@ -1,3 +1,7 @@
+<app-dom-portal [selector]="'#headerId'">
+  <button routerLink="/login" class="mr-5 hover:text-gray-900">Login</button>
+</app-dom-portal>
+
 <div
   class="text-gray-600 container px-5 py-10 sm:py-28 mx-auto flex flex-wrap items-center justify-center content-center"
 >
@@ -6,7 +10,7 @@
     <p class="leading-relaxed mt-4">
       The free and easy way to track all your expenses and view useful charts about how you manage your money. This tool
       is built for learning purposes so feel free to give any review you may seem fit or any idea of how I can still
-      improve it. Sign up and get ready to be amazed by its simplicity.
+      improve it. Sign up and get ready to be amazed by its <span class="font-bold">simplicity</span>.
     </p>
   </div>
   <div class="lg:w-2/6 md:w-1/2 rounded-lg p-8 flex flex-col md:ml-auto w-full sm:mt-10 md:mt-0">

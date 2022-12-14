@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { PortalModule } from '@angular/cdk/portal';
 
 const allMaterialModules = [
   CommonModule,
@@ -13,6 +14,7 @@ const allMaterialModules = [
   MatFormFieldModule,
   MatInputModule,
   MatCheckboxModule,
+  PortalModule,
 ];
 
 @NgModule({
