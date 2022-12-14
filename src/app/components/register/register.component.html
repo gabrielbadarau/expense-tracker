@@ -1,1 +1,42 @@
-<p>register works!</p>
+<div
+  class="text-gray-600 container px-5 py-10 sm:py-28 mx-auto flex flex-wrap items-center justify-center content-center"
+>
+  <div class="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0 text-center">
+    <h1 class="font-medium text-3xl text-gray-900">First time here? Welcome to ExpenseTracker</h1>
+    <p class="leading-relaxed mt-4">
+      The free and easy way to track all your expenses and view useful charts about how you manage your money. This tool
+      is built for learning purposes so feel free to give any review you may seem fit or any idea of how I can still
+      improve it. Sign up and get ready to be amazed by its simplicity.
+    </p>
+  </div>
+  <div class="lg:w-2/6 md:w-1/2 rounded-lg p-8 flex flex-col md:ml-auto w-full sm:mt-10 md:mt-0">
+    <h2 class="text-gray-900 text-lg font-medium mb-5 text-center sm:text-left">Create your account</h2>
+    <mat-form-field appearance="outline">
+      <mat-label class="text-lg">Enter your name</mat-label>
+      <input matInput />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label class="text-lg">Enter your email</mat-label>
+      <input matInput />
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label class="text-lg">Enter your password</mat-label>
+      <input matInput [type]="hidePassword ? 'password' : 'text'" />
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="hidePassword = !hidePassword"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hidePassword"
+      >
+        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-flat-button color="primary" class="border-0 py-2 px-8 rounded text-lg hover:brightness-95">
+      <span class="text-white">Sign Up</span>
+    </button>
+    <p class="text-xs text-gray-500 mt-3 text-center">
+      Already have an account? Login <button routerLink="/login" class="text-gray-900 text-xs font-bold">here</button>.
+    </p>
+  </div>
+</div>

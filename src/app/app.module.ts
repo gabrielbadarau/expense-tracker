@@ -12,9 +12,10 @@ import { MaterialModule } from './modules/material-module/material.module';
 
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
-  declarations: [AppComponent, RegisterComponent, LoginComponent],
+  declarations: [AppComponent, RegisterComponent, LoginComponent, ResetPasswordComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
