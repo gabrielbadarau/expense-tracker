@@ -1,16 +1,6 @@
-@import './assets/styles/dialogs';
-@import './assets/styles/material';
-@import './assets/styles/scrollbar';
-@import './assets/styles/table';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-html,
-body {
-  height: 100%;
-}
 
 body {
   margin: 0;
@@ -30,4 +20,9 @@ body {
 .mat-step-header .mat-step-icon {
   @apply bg-gray-800;
   @apply text-white;
+}
+
+.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field
+  .mdc-notched-outline__notch {
+  border-right-style: hidden;
 }
