@@ -1,0 +1,8 @@
+<app-dom-portal [selector]="'#headerId'">
+  <button routerLink="/dashboard/add-expense" class="mr-5 hover:text-gray-900">Add expense</button>
+  <button routerLink="/charts" class="mr-5 hover:text-gray-900">View charts</button>
+</app-dom-portal>
+
+<div class="text-gray-600 container px-5 py-10 sm:py-28 mx-auto flex flex-wrap justify-center content-center">
+  <router-outlet></router-outlet>
+</div>

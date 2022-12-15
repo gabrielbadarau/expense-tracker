@@ -26,3 +26,41 @@ body {
   .mdc-notched-outline__notch {
   border-right-style: hidden;
 }
+
+.mat-datepicker-content-touch {
+  .mat-button,
+  .mat-fab,
+  .mat-icon-button,
+  .mat-mini-fab,
+  .mat-raised-button,
+  th,
+  td {
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+}
+
+.mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-text-field__input {
+  color: black;
+  font-weight: 500;
+  padding-top: 2px;
+  font-size: 1.1rem;
+}
+
+.mat-mdc-select-value-text {
+  color: black;
+  font-weight: 500;
+  padding-top: 2px;
+  font-size: 1.1rem;
+}
+
+.mat-mdc-option .mdc-list-item__primary-text {
+  color: black !important;
+  font-weight: 500 !important;
+  font-size: 1rem !important;
+}
+
+.mat-mdc-form-field-subscript-wrapper{
+  margin-top: -4px;
+  margin-bottom: 4px;
+}

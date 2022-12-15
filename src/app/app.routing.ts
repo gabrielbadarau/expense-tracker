@@ -19,6 +19,10 @@ const routes: Routes = [
     component: ResetPasswordComponent,
   },
   {
+    path: 'dashboard',
+    loadChildren: () => import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule),
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',
