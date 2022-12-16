@@ -8,15 +8,14 @@ import { DomSanitizer } from '@angular/platform-browser';
   imports: [CommonModule, MatIconModule],
 })
 export class IconRegistryModule {
-  constructor(
-    private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
-  ) {
+  constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
     this.matIconRegistry.addSvgIcon(
       'expense-tracker-logo',
-      this.domSanitizer.bypassSecurityTrustResourceUrl(
-        'assets/icons/expense-tracker-logo.svg'
-      )
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/expense-tracker-logo.svg')
+    );
+    this.matIconRegistry.addSvgIcon(
+      'close',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/close.svg')
     );
   }
 }

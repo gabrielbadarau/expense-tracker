@@ -10,7 +10,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const allMaterialModules = [
   CommonModule,
@@ -24,7 +24,7 @@ const allMaterialModules = [
   MatSelectModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatMomentDateModule,
+  MatSnackBarModule,
 ];
 
 @NgModule({

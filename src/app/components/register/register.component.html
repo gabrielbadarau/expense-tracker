@@ -13,19 +13,33 @@
       improve it. Sign up and get ready to be amazed by its <span class="font-bold">simplicity</span>.
     </p>
   </div>
-  <div class="lg:w-2/6 md:w-1/2 rounded-lg p-8 flex flex-col md:ml-auto w-full sm:mt-10 md:mt-0">
+
+  <form
+    [formGroup]="userForm"
+    class="lg:w-2/6 md:w-1/2 rounded-lg p-8 flex flex-col md:ml-auto w-full sm:mt-10 md:mt-0"
+  >
     <h2 class="text-gray-900 text-lg font-medium mb-5 text-center sm:text-left">Create your account</h2>
-    <mat-form-field appearance="outline">
+
+    <mat-form-field hideRequiredMarker="true" appearance="outline">
       <mat-label class="text-lg">Enter your name</mat-label>
-      <input matInput />
+      <mat-error *ngIf="userForm.get('name')?.hasError('required')">Name is required</mat-error>
+      <input matInput formControlName="name" />
     </mat-form-field>
-    <mat-form-field appearance="outline">
+
+    <mat-form-field hideRequiredMarker="true" appearance="outline">
       <mat-label class="text-lg">Enter your email</mat-label>
-      <input matInput />
+      <input matInput type="email" formControlName="email" />
+      <mat-error *ngIf="userForm.get('email')?.hasError('required')">Email is required</mat-error>
+      <mat-error *ngIf="userForm.get('email')?.hasError('pattern')">Invalid email</mat-error>
     </mat-form-field>
-    <mat-form-field appearance="outline">
+
+    <mat-form-field hideRequiredMarker="true" appearance="outline">
       <mat-label class="text-lg">Enter your password</mat-label>
-      <input matInput [type]="hidePassword ? 'password' : 'text'" />
+      <input matInput [type]="hidePassword ? 'password' : 'text'" autocomplete="off" formControlName="password" />
+      <mat-error *ngIf="userForm.get('password')?.hasError('required')">Password is required</mat-error>
+      <mat-error *ngIf="userForm.get('password')?.hasError('minlength')"
+        >Password must be at least 8 characters long</mat-error
+      >
       <button
         mat-icon-button
         matSuffix
@@ -36,11 +50,18 @@
         <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
       </button>
     </mat-form-field>
-    <button mat-flat-button color="primary" class="border-0 py-2 px-8 rounded text-lg hover:brightness-95">
+
+    <button
+      mat-flat-button
+      color="primary"
+      class="border-0 py-2 px-8 rounded text-lg hover:brightness-95"
+      (click)="register()"
+    >
       <span class="text-white">Sign Up</span>
     </button>
+
     <p class="text-xs text-gray-500 mt-3 text-center">
       Already have an account? Login <button routerLink="/login" class="text-gray-900 text-xs font-bold">here</button>.
     </p>
-  </div>
+  </form>
 </div>

@@ -7,14 +7,22 @@
     <h1 class="title-font font-medium text-3xl text-gray-900">Welcome back!</h1>
     <p class="leading-relaxed mt-4">Please login to continue.</p>
   </div>
-  <div class="w-96 rounded-lg p-8 flex flex-col">
-    <mat-form-field appearance="outline">
+
+  <form [formGroup]="userForm" class="w-96 rounded-lg p-8 flex flex-col">
+    <mat-form-field hideRequiredMarker="true" appearance="outline">
       <mat-label class="text-lg">Enter your email</mat-label>
-      <input matInput />
+      <input matInput type="email" formControlName="email" />
+      <mat-error *ngIf="userForm.get('email')?.hasError('required')">Email is required</mat-error>
+      <mat-error *ngIf="userForm.get('email')?.hasError('pattern')">Invalid email</mat-error>
     </mat-form-field>
-    <mat-form-field appearance="outline">
+
+    <mat-form-field hideRequiredMarker="true" appearance="outline">
       <mat-label class="text-lg">Enter your password</mat-label>
-      <input matInput [type]="hidePassword ? 'password' : 'text'" />
+      <input matInput [type]="hidePassword ? 'password' : 'text'" autocomplete="off" formControlName="password" />
+      <mat-error *ngIf="userForm.get('password')?.hasError('required')">Password is required</mat-error>
+      <mat-error *ngIf="userForm.get('password')?.hasError('minlength')"
+        >Password must be at least 8 characters long</mat-error
+      >
       <button
         mat-icon-button
         matSuffix
@@ -25,18 +33,26 @@
         <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
       </button>
     </mat-form-field>
+
     <div class="under-password flex justify-between items-center mb-6">
       <mat-checkbox labelPosition="before">
         <span class="text-gray-800 text-md text-base font-normal">Remember me</span></mat-checkbox
       >
       <button routerLink="/reset-password" class="text-gray-800 text-md font-normal">Forgot password?</button>
     </div>
-    <button mat-flat-button color="primary" class="border-0 py-2 px-8 rounded text-lg hover:brightness-95">
+
+    <button
+      mat-flat-button
+      color="primary"
+      class="border-0 py-2 px-8 rounded text-lg hover:brightness-95"
+      (click)="login()"
+    >
       <span class="text-white">Login</span>
     </button>
+
     <p class="text-xs text-gray-500 mt-3 text-center">
       Don't have an account? Register
       <button routerLink="/register" class="text-gray-900 text-xs font-bold">here</button>.
     </p>
-  </div>
+  </form>
 </div>

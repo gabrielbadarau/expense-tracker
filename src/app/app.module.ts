@@ -11,6 +11,7 @@ import { AppRouting } from './app.routing';
 import { IconRegistryModule } from './modules/icon-registry-module/icon-registry.module';
 import { MaterialModule } from './modules/material-module/material.module';
 import { DomPortalModule } from './shared/components/dom-portal/dom-portal.module';
+import { SnackBarComponentModule } from './shared/components/snackbar/snackbar.module';
 
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
@@ -27,6 +28,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     MaterialModule,
     ReactiveFormsModule,
     DomPortalModule,
+    SnackBarComponentModule,
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   bootstrap: [AppComponent],

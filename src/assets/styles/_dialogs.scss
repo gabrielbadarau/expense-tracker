@@ -15,11 +15,12 @@
   }
 }
 
-.custom-snackbar {
-  @apply bg-gray-800;
-  @apply text-white;
-  border-radius: 12px !important;
-  max-width: 500px !important;
+.error-snackbar {
+  --mdc-snackbar-container-color: #e57373;
+
+  .mat-simple-snackbar-action {
+    color: white;
+  }
 }
 
 .mat-tooltip {
