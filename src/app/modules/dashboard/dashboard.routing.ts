@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { ExpensesTableComponent } from './components/expenses-table/expenses-table.component';
-import { LayoutComponent } from './components/layout/layout.component';
+import { LayoutComponent } from './layout/layout.component';
 import { ExpenseComponent } from './components/expense/expense.component';
 
 import { FormMode } from '../../shared/model/form-mode.model';
@@ -24,7 +24,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'edit-expense',
+        path: 'edit-expense/:id',
         component: ExpenseComponent,
         data: {
           formMode: FormMode.EDIT,

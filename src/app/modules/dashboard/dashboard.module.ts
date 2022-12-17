@@ -7,7 +7,7 @@ import { DashboardRouting } from './dashboard.routing';
 import { MaterialModule } from '../material-module/material.module';
 import { DomPortalModule } from '../../shared/components/dom-portal/dom-portal.module';
 
-import { LayoutComponent } from './components/layout/layout.component';
+import { LayoutComponent } from './layout/layout.component';
 import { ExpensesTableComponent } from './components/expenses-table/expenses-table.component';
 import { ExpenseComponent } from './components/expense/expense.component';
 

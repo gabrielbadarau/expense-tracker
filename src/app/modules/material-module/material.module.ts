@@ -11,6 +11,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 const allMaterialModules = [
   CommonModule,
@@ -25,6 +27,8 @@ const allMaterialModules = [
   MatDatepickerModule,
   MatNativeDateModule,
   MatSnackBarModule,
+  MatPaginatorModule,
+  MatSortModule,
 ];
 
 @NgModule({
