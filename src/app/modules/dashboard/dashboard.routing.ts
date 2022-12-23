@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ExpensesTableComponent } from './components/expenses-table/expenses-table.component';
 import { LayoutComponent } from './layout/layout.component';
-import { ExpenseComponent } from './components/expense/expense.component';
+import { ExpensesPage } from './pages/expenses/expenses.page';
+import { AddEditExpense } from './components/add-edit-expense/add-edit-expense.component';
 
 import { FormMode } from '../../shared/model/form-mode.model';
 
@@ -14,18 +14,18 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: ExpensesTableComponent,
+        component: ExpensesPage,
       },
       {
         path: 'add-expense',
-        component: ExpenseComponent,
+        component: AddEditExpense,
         data: {
           formMode: FormMode.CREATE,
         },
       },
       {
         path: 'edit-expense/:id',
-        component: ExpenseComponent,
+        component: AddEditExpense,
         data: {
           formMode: FormMode.EDIT,
         },

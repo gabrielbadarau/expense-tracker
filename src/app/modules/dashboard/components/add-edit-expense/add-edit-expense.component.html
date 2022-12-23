@@ -1,4 +1,4 @@
-<div class="w-full flex flex-col justify-center content-center text-center">
+<div class="w-full flex flex-col justify-center text-center">
   <h1 class="title-font font-medium text-3xl text-gray-900">
     {{ formMode === formModes.CREATE ? 'New expense' : 'Edit expense' }}
   </h1>
@@ -22,7 +22,7 @@
 
   <mat-form-field hideRequiredMarker="true" appearance="outline">
     <mat-label class="text-lg">Category</mat-label>
-    <mat-select formControlName="category">
+    <mat-select class="expense-selector" formControlName="category">
       <mat-option *ngFor="let category of categories" [value]="category">
         {{ category }}
       </mat-option>

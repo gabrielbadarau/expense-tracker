@@ -1,0 +1,49 @@
+<ng-container *ngIf="{value: isSmallScreen$ | async } as isSmallScreen">
+  <div class="h-full">
+    <mat-tab-group [(selectedIndex)]="selectedIndex">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon
+            matTooltip="All expenses"
+            matTooltipPosition="above"
+            matTooltipDisabled="{{!isSmallScreen.value}}"
+            class="mr-2 scale-75 !w-12 !h-12"
+            svgIcon="all-expenses"
+          ></mat-icon>
+          <span *ngIf="!isSmallScreen.value">All expenses</span>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab *ngFor="let category of categories">
+        <ng-template mat-tab-label>
+          <mat-icon
+            matTooltip="{{category}}"
+            matTooltipPosition="above"
+            matTooltipDisabled="{{!isSmallScreen.value}}"
+            class="mr-2 scale-75 !w-12 !h-12"
+            svgIcon="{{category.toLowerCase().replace(' ','-')}}"
+          ></mat-icon>
+          <span *ngIf="!isSmallScreen.value">{{category}}</span>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+
+    <!-- <ng-container *ngIf="orders$ | async as ordersState">
+    <div class="h-[calc(100%-53px)] overflow-y-scroll">
+      <app-expenses-table
+        [orders]="ordersState.orders.domain"
+        [showOrdersStatus]="selectedIndex === 0"
+        (sortChanged)="handleSortChanged($event)"
+        (orderStatusChanged)="updateOrderStatus($event)"
+      >
+      </app-expenses-table>
+    </div>
+  </ng-container> -->
+
+    <ng-container>
+      <div class="overflow-y-scroll" style="height: calc(100vh - 180px)">
+        <app-expenses-table> </app-expenses-table>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>

@@ -1,17 +1,19 @@
-<header>
-  <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-    <button routerLink="dashboard" class="flex font-medium items-center mb-4 md:mb-0">
-      <mat-icon class="logo" svgIcon="expense-tracker-logo"></mat-icon>
-      <span class="ml-3 text-xl">ExpenseTracker</span>
-    </button>
-    <nav
-      class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400 flex flex-wrap items-center text-base justify-center text-gray-600"
-    >
-      <div id="headerId"></div>
-    </nav>
-  </div>
-</header>
+<div class="max-h-full h-full w-full bg-white">
+  <header class="h-24">
+    <div class="container mx-auto flex flex-nowrap p-5 flex-row items-center">
+      <button routerLink="dashboard" class="flex font-medium items-center mb-4 mb-0">
+        <mat-icon class="!h-8 !w-8" svgIcon="expense-tracker-logo"></mat-icon>
+        <span class="ml-3 text-xl">ExpenseTracker</span>
+      </button>
+      <nav
+        class="mr-auto ml-4 py-1 pl-4 border-l border-gray-400 flex flex-nowrap items-center text-base justify-center text-gray-600"
+      >
+        <div id="headerId"></div>
+      </nav>
+    </div>
+  </header>
 
-<div>
-  <router-outlet></router-outlet>
+  <div class="mx-auto" style="height: calc(100vh - 96px)">
+    <router-outlet></router-outlet>
+  </div>
 </div>

@@ -12,10 +12,10 @@ import { ExpenseCategory } from '../../../../shared/model/expense-category.model
 @UntilDestroy()
 @Component({
   selector: 'app-expense',
-  templateUrl: './expense.component.html',
-  styleUrls: ['./expense.component.scss'],
+  templateUrl: './add-edit-expense.component.html',
+  styleUrls: ['./add-edit-expense.component.scss'],
 })
-export class ExpenseComponent implements OnInit {
+export class AddEditExpense implements OnInit {
   maxDateCalendar = new Date();
   categories = Object.values(ExpenseCategory);
 

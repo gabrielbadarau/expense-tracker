@@ -13,6 +13,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const allMaterialModules = [
   CommonModule,
@@ -29,6 +31,8 @@ const allMaterialModules = [
   MatSnackBarModule,
   MatPaginatorModule,
   MatSortModule,
+  MatTabsModule,
+  MatTooltipModule,
 ];
 
 @NgModule({
