@@ -1,14 +1,9 @@
-<mat-form-field appearance="outline">
-  <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input />
-</mat-form-field>
-
-<div class="w-full rounded shadow">
-  <table mat-table [dataSource]="expenses" matSort multiTemplateDataRows>
+<div #table class="w-full rounded shadow flex flex-col flex-nowrap">
+  <table mat-table [dataSource]="expenses" matSort multiTemplateDataRows matSortDisableClear="true">
     <!-- Date Column -->
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-      <td mat-cell *matCellDef="let row">{{ row.date }}</td>
+      <td mat-cell *matCellDef="let row">{{ row.date | date : 'dd/MM/yyyy' }}</td>
     </ng-container>
 
     <!-- Category Column -->
@@ -20,19 +15,19 @@
     <!-- Amount Column -->
     <ng-container matColumnDef="amount">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
-      <td mat-cell *matCellDef="let row">{{ row.amount }}</td>
+      <td mat-cell *matCellDef="let row">{{ row.amount | currency : 'RON' }}</td>
     </ng-container>
 
     <!-- Description Column -->
     <ng-container matColumnDef="description">
-      <th mat-header-cell *matHeaderCellDef>Description</th>
-      <td mat-cell *matCellDef="let row">{{ row.description ?? '-' }}</td>
+      <th class="sm:table-cell hidden" mat-header-cell *matHeaderCellDef>Description</th>
+      <td class="sm:table-cell hidden" mat-cell *matCellDef="let row">{{ row.description ?? '-' }}</td>
     </ng-container>
 
     <!-- Expand Action Column -->
     <ng-container matColumnDef="expand">
-      <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
-      <td mat-cell *matCellDef="let element">
+      <th class="sm:table-cell hidden" mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+      <td class="sm:table-cell hidden" mat-cell *matCellDef="let element">
         <button
           mat-icon-button
           aria-label="expand row"
@@ -48,19 +43,45 @@
     <ng-container matColumnDef="expandedDetail">
       <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
         <div class="row-expanded-details" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-          <div>
-            {{ element.description }}
+          <div class="container mb-2 px-5 mx-auto text-gray-600 w-full">
+            <div class="h-full bg-gray-100 bg-opacity-75 px-8 pt-6 rounded-lg overflow-hidden text-center relative">
+              <h1 class="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-1">
+                {{ element.date | date : 'EEEE, MMMM d, y' }}
+              </h1>
+              <h2 class="tracking-widest text-xs title-font font-medium text-gray-500 mb-3">
+                {{ element.category }}
+              </h2>
+              <p class="leading-relaxed mb-3">
+                {{ element.description ? element.description : 'No description added to this expense.' }}
+              </p>
+              <p class="font-bold">You paid {{ element.amount }} RON</p>
+              <div class="text-center mt-2 leading-none flex justify-center py-4">
+                <button mat-flat-button color="primary" class="hover:brightness-95 !w-24 !h-10 mr-5">
+                  <span class="text-white leading-none text-sm">Edit</span>
+                </button>
+
+                <button mat-flat-button color="warn" class="hover:brightness-95 !w-24 !h-10">
+                  <span class="text-white leading-none text-sm">Delete</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </td>
     </ng-container>
 
-    <!-- Row shown when there is no matching data. -->
+    <!-- Shown when there is no matching data. -->
     <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">No data</td>
+      <td class="mat-cell text-center p-32" colspan="9999">
+        <span class="font-medium text-xl">No data available</span>
+      </td>
     </tr>
 
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand"></tr>
+    <tr
+      class="header-table font-medium"
+      mat-header-row
+      *matHeaderRowDef="columnsToDisplayWithExpand; sticky: true"
+    ></tr>
     <tr
       mat-row
       *matRowDef="let element; columns: columnsToDisplayWithExpand"
@@ -72,8 +93,9 @@
   </table>
 
   <mat-paginator
+    class="mt-6"
     [showFirstLastButtons]="true"
     [pageSizeOptions]="[5, 10, 25, 100]"
-    aria-label="Select page of users"
+    (page)="scrollTop()"
   ></mat-paginator>
 </div>

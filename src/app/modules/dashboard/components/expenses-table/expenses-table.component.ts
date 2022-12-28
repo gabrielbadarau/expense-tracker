@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,25 +22,20 @@ export class ExpensesTableComponent implements AfterViewInit {
   expenses: MatTableDataSource<TableExpenseData>;
   expandedElement: TableExpenseData | null = null;
 
+  @ViewChild('table', { read: ElementRef }) tableExpense!: ElementRef;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor() {
-    // Assign the data to the data source for the table to render
     this.expenses = new MatTableDataSource(mockTableData);
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.expenses.paginator = this.paginator;
     this.expenses.sort = this.sort;
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.expenses.filter = filterValue.trim().toLowerCase();
-
-    if (this.expenses.paginator) {
-      this.expenses.paginator.firstPage();
-    }
+  scrollTop(): void {
+    setTimeout(() => this.tableExpense.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   }
 }

@@ -3,27 +3,18 @@
     <mat-tab-group [(selectedIndex)]="selectedIndex">
       <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon
-            matTooltip="All expenses"
-            matTooltipPosition="above"
-            matTooltipDisabled="{{!isSmallScreen.value}}"
-            class="mr-2 scale-75 !w-12 !h-12"
-            svgIcon="all-expenses"
-          ></mat-icon>
-          <span *ngIf="!isSmallScreen.value">All expenses</span>
+          <mat-icon class="sm:mr-2 scale-75 !w-12 !h-12" svgIcon="all-expenses"></mat-icon>
+          <span class="font-medium" *ngIf="!isSmallScreen.value">All expenses</span>
         </ng-template>
       </mat-tab>
 
       <mat-tab *ngFor="let category of categories">
         <ng-template mat-tab-label>
           <mat-icon
-            matTooltip="{{category}}"
-            matTooltipPosition="above"
-            matTooltipDisabled="{{!isSmallScreen.value}}"
-            class="mr-2 scale-75 !w-12 !h-12"
+            class="sm:mr-2 scale-75 !w-12 !h-12"
             svgIcon="{{category.toLowerCase().replace(' ','-')}}"
           ></mat-icon>
-          <span *ngIf="!isSmallScreen.value">{{category}}</span>
+          <span class="font-medium" *ngIf="!isSmallScreen.value">{{category}}</span>
         </ng-template>
       </mat-tab>
     </mat-tab-group>
@@ -41,7 +32,7 @@
   </ng-container> -->
 
     <ng-container>
-      <div class="overflow-y-scroll" style="height: calc(100vh - 180px)">
+      <div class="overflow-y-scroll sm:mt-10 mt-5 pb-5" style="height: calc(100vh - 185px)">
         <app-expenses-table> </app-expenses-table>
       </div>
     </ng-container>

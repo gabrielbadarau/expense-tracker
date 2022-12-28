@@ -1,15 +1,13 @@
-<app-dom-portal *ngIf="{ value: isSmallScreen$ | async } as isSmallScreen" [selector]="'#headerId'">
-  <ng-container *ngIf="!isSmallScreen.value; else menu">
-    <button routerLink="/dashboard/add-expense" class="mr-5 hover:text-gray-900">Add expense</button>
-    <button routerLink="/charts" class="mr-5 hover:text-gray-900">View charts</button>
-  </ng-container>
-  <ng-template #menu>
-    <button mat-icon-button class="mr-5 hover:text-gray-900">
-      <mat-icon svgIcon="menu"></mat-icon>
-    </button>
-  </ng-template>
+<app-dom-portal [selector]="'#headerId'">
+  <button routerLink="/dashboard/add-expense" class="font-medium mr-5 hover:text-gray-900 hidden sm:inline-block">
+    Add expense
+  </button>
+  <button routerLink="/charts" class="font-medium mr-5 hover:text-gray-900 hidden sm:inline-block">View charts</button>
+  <button mat-icon-button class="mr-5 hover:text-gray-900 sm:!hidden inline-block">
+    <mat-icon svgIcon="menu"></mat-icon>
+  </button>
 </app-dom-portal>
 
-<div class="text-gray-600 container py-8 mx-auto flex flex-wrap justify-center" style="height: calc(100vh - 96px)">
+<div class="text-gray-600 container px-4 py-8 mx-auto flex flex-wrap justify-center" style="height: calc(100vh - 72px)">
   <router-outlet></router-outlet>
 </div>

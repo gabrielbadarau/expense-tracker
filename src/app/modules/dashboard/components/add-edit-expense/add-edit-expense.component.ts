@@ -48,7 +48,8 @@ export class AddEditExpense implements OnInit {
 
   create(): void {
     if (this.form.valid) {
-      console.log(this.form);
+      this.form.value.date = this.form.value.date.toISOString()
+      console.log(this.form.value);
     } else {
       this.form.markAllAsTouched();
       this.openErrorSnackBar();
@@ -57,7 +58,7 @@ export class AddEditExpense implements OnInit {
 
   edit(): void {
     if (this.form.valid) {
-      console.log(this.form);
+      console.log(this.form.value);
     } else {
       this.form.markAllAsTouched();
       this.openErrorSnackBar();
