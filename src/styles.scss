@@ -66,12 +66,20 @@ body {
   height: 3rem;
 }
 
-.mat-sort-header-content{
+.mat-sort-header-content {
   font-weight: 600;
 }
 
-.mat-mdc-paginator .mat-mdc-select-value{
-  font-size:0.8rem;
+.mat-mdc-paginator .mat-mdc-select-value {
+  font-size: 0.8rem;
   font-weight: 500;
+}
+
+@media only screen and (max-width: 500px) {
+  .mdc-data-table__cell,
+  .mdc-data-table__header-cell {
+    padding-left: 5px !important;
+    padding-right: 0px !important;
+  }
 }
 
