@@ -7,4 +7,14 @@ import { map, Observable } from 'rxjs';
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
 })
-export class LayoutComponent {}
+export class LayoutComponent {
+  isSmallScreen$: Observable<boolean>;
+
+  constructor(private breakpointObserver: BreakpointObserver) {
+    this.isSmallScreen$ = breakpointObserver.observe([Breakpoints.XSmall]).pipe(
+      map((xs) => {
+        return xs.matches;
+      })
+    );
+  }
+}
