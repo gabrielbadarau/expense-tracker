@@ -45,6 +45,7 @@ body {
   font-weight: 500;
   padding-top: 2px;
   font-size: 1.1rem;
+  line-height: 1.75rem;
 }
 
 .expense-selector .mat-mdc-select-value-text {
@@ -52,6 +53,7 @@ body {
   font-weight: 500;
   padding-top: 2px;
   font-size: 1.1rem;
+  line-height: 1.75rem;
 }
 
 .mat-mdc-form-field-subscript-wrapper {
@@ -68,11 +70,26 @@ body {
 
 .mat-sort-header-content {
   font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .mat-mdc-paginator .mat-mdc-select-value {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
   font-weight: 500;
+}
+
+.mat-mdc-paginator-container {
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.mat-mdc-option {
+  font-weight: 500;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 @media only screen and (max-width: 500px) {
@@ -82,4 +99,3 @@ body {
     padding-right: 0px !important;
   }
 }
-

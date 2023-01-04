@@ -4,7 +4,7 @@
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon class="sm:mr-2 scale-75 !w-12 !h-12" svgIcon="all-expenses"></mat-icon>
-          <span class="font-medium" *ngIf="!isSmallScreen.value">All expenses</span>
+          <span class="font-medium text-base" *ngIf="!isSmallScreen.value">All expenses</span>
         </ng-template>
       </mat-tab>
 
@@ -14,7 +14,7 @@
             class="sm:mr-2 scale-75 !w-12 !h-12"
             svgIcon="{{category.toLowerCase().replace(' ','-')}}"
           ></mat-icon>
-          <span class="font-medium" *ngIf="!isSmallScreen.value">{{category}}</span>
+          <span class="font-medium text-base" *ngIf="!isSmallScreen.value">{{category}}</span>
         </ng-template>
       </mat-tab>
     </mat-tab-group>

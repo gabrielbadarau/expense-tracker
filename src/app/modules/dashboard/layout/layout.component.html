@@ -1,11 +1,26 @@
 <app-dom-portal [selector]="'#headerId'">
-  <button routerLink="/dashboard/add-expense" class="font-medium mr-5 hover:text-gray-900 hidden sm:inline-block">
-    Add expense
-  </button>
-  <button routerLink="/charts" class="font-medium mr-5 hover:text-gray-900 hidden sm:inline-block">View charts</button>
-  <button mat-icon-button class="mr-5 hover:text-gray-900 sm:!hidden inline-block">
+  <div class="flex flex-nowrap justify-between">
+    <div class="flex flex-nowrap">
+      <button routerLink="/dashboard/add-expense" class="font-medium mr-5 flex items-center mb-0">
+        <mat-icon svgIcon="add"></mat-icon>
+        <span class="ml-2 text-lg">Add expense</span>
+      </button>
+      <button routerLink="/charts" class="font-medium mr-5 flex items-center mb-0">
+        <mat-icon svgIcon="charts"></mat-icon>
+        <span class="ml-2 text-lg">View charts</span>
+      </button>
+    </div>
+    <div>
+      <button class="font-medium mr-5 flex items-center mb-0">
+        <mat-icon svgIcon="logout"></mat-icon>
+        <span class="ml-2 text-lg">Log out</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- <button mat-icon-button class="mr-5 hover:text-gray-900 hidden">
     <mat-icon svgIcon="menu"></mat-icon>
-  </button>
+  </button> -->
 </app-dom-portal>
 
 <div class="text-gray-600 container px-4 py-8 mx-auto flex flex-wrap justify-center" style="height: calc(100vh - 72px)">

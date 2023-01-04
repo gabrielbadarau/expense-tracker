@@ -64,5 +64,14 @@ export class IconRegistryModule {
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/all-expenses.svg')
     );
     this.matIconRegistry.addSvgIcon('menu', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/menu.svg'));
+    this.matIconRegistry.addSvgIcon('add', this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/add.svg'));
+    this.matIconRegistry.addSvgIcon(
+      'charts',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/charts.svg')
+    );
+    this.matIconRegistry.addSvgIcon(
+      'logout',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/logout.svg')
+    );
   }
 }

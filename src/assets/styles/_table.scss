@@ -14,3 +14,17 @@ table tr:last-child td /*To remove the last border*/ {
 table tr .mat-table-sticky {
   top: -5px !important;
 }
+
+.mat-mdc-table tbody,
+.mat-mdc-table tfoot,
+.mat-mdc-table thead,
+.mat-mdc-cell,
+.mat-mdc-footer-cell,
+.mat-mdc-header-row,
+.mat-mdc-row,
+.mat-mdc-footer-row,
+.mat-mdc-table .mat-mdc-header-cell {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+}
