@@ -9,6 +9,7 @@ import { map, Observable } from 'rxjs';
 })
 export class LayoutComponent {
   isSmallScreen$: Observable<boolean>;
+  isOpen = false;
 
   constructor(private breakpointObserver: BreakpointObserver) {
     this.isSmallScreen$ = breakpointObserver.observe([Breakpoints.XSmall]).pipe(

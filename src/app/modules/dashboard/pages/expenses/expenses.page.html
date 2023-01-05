@@ -1,6 +1,6 @@
 <ng-container *ngIf="{value: isSmallScreen$ | async } as isSmallScreen">
-  <div class="h-full">
-    <mat-tab-group [(selectedIndex)]="selectedIndex">
+  <div class="h-full pt-5">
+    <mat-tab-group class="pb-5" [(selectedIndex)]="selectedIndex">
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon class="sm:mr-2 scale-75 !w-12 !h-12" svgIcon="all-expenses"></mat-icon>
@@ -32,7 +32,7 @@
   </ng-container> -->
 
     <ng-container>
-      <div class="overflow-y-scroll sm:mt-10 mt-5 pb-5" style="height: calc(100vh - 185px)">
+      <div class="overflow-scroll" style="height: calc(100vh - 175px)">
         <app-expenses-table> </app-expenses-table>
       </div>
     </ng-container>

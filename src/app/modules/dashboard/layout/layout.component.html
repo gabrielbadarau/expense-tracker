@@ -4,27 +4,70 @@
       <div class="flex flex-nowrap">
         <button routerLink="/dashboard/add-expense" class="font-medium mr-5 flex items-center mb-0">
           <mat-icon svgIcon="add"></mat-icon>
-          <span class="ml-2 text-lg">Add expense</span>
+          <span class="pl-2 text-lg">Add expense</span>
         </button>
         <button routerLink="/charts" class="font-medium mr-5 flex items-center mb-0">
           <mat-icon svgIcon="charts"></mat-icon>
-          <span class="ml-2 text-lg">View charts</span>
+          <span class="pl-2 text-lg">View charts</span>
         </button>
       </div>
       <div>
         <button class="font-medium mr-5 flex items-center mb-0">
           <mat-icon svgIcon="logout"></mat-icon>
-          <span class="ml-2 text-lg">Log out</span>
+          <span class="pl-2 text-lg">Log out</span>
         </button>
       </div>
     </div>
 
-    <button mat-mini-fab color="primary" *ngIf="isSmallScreen.value" class="mr-5 font-medium flex items-center mb-0">
+    <button
+      mat-mini-fab
+      (click)="isOpen = !isOpen"
+      color="primary"
+      *ngIf="isSmallScreen.value"
+      class="mr-5 font-medium flex items-center mb-0"
+    >
       <mat-icon svgIcon="menu"></mat-icon>
     </button>
   </ng-container>
 </app-dom-portal>
 
-<div class="text-gray-600 container px-4 py-8 mx-auto flex flex-wrap justify-center" style="height: calc(100vh - 72px)">
-  <router-outlet></router-outlet>
-</div>
+<mat-sidenav-container class="h-full">
+  <mat-sidenav [(opened)]="isOpen" class="w-[240px]" [fixedInViewport]="true">
+    <div class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-slate-50 h-full">
+      <div class="absolute top-[6px] right-[6px] -mr-0 pt-2">
+        <button mat-icon-button (click)="isOpen = !isOpen">
+          <mat-icon svgIcon="close" class="text-gray-800"></mat-icon>
+        </button>
+      </div>
+
+      <div class="flex-shrink-0 flex items-center px-4">
+        <div class="text-orange-500 font-medium text-lg ml-2">Foodify</div>
+      </div>
+
+      <div class="pt-5 flex-1 h-0 overflow-y-auto">
+        <nav class="px-2 space-y-1">
+          <a
+            routerLink="/dashboard"
+            routerLinkActive="bg-gray-700 !text-white !hover:bg-gray-900"
+            class="text-gray-800 group flex items-center px-2 py-2 text-base font-medium rounded-md"
+          >
+            <span>Dashboard</span>
+          </a>
+          <a
+            routerLink="orders"
+            routerLinkActive="bg-gray-700 !text-white !hover:bg-gray-900"
+            class="text-gray-800 group flex items-center px-2 py-2 text-base font-medium rounded-md"
+          >
+            <span>Orders</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="bg-white">
+    <div class="text-gray-600 container mx-auto flex flex-wrap justify-center">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

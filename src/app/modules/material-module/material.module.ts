@@ -15,6 +15,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 const allMaterialModules = [
   CommonModule,
@@ -33,6 +34,7 @@ const allMaterialModules = [
   MatSortModule,
   MatTabsModule,
   MatTooltipModule,
+  MatSidenavModule,
 ];
 
 @NgModule({
