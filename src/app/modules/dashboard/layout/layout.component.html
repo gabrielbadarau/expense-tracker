@@ -1,22 +1,36 @@
 <app-dom-portal [selector]="'#headerId'">
-  <div class="header-menu flex flex-nowrap justify-between sm:!flex !hidden">
+  <div class="flex flex-nowrap justify-between sm:!flex !hidden">
     <div class="flex flex-nowrap">
-      <button routerLink="/dashboard" class="font-medium mr-5 flex items-center mb-0">
-        <mat-icon class="lg:!inline-block !hidden" svgIcon="dashboard"></mat-icon>
+      <button
+        routerLinkActive="active-header shadow"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLink="/dashboard"
+        class="font-medium mr-5 flex items-center mb-0 p-1 rounded-lg"
+      >
+        <mat-icon class="md:!inline-block !hidden" svgIcon="dashboard"></mat-icon>
         <span class="pl-2 text-lg">Dashboard</span>
       </button>
-      <button routerLink="/dashboard/add-expense" class="font-medium mr-5 flex items-center mb-0">
-        <mat-icon class="lg:!inline-block !hidden" svgIcon="add"></mat-icon>
+      <button
+        routerLinkActive="active-header shadow"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLink="/dashboard/add-expense"
+        class="font-medium mr-5 flex items-center mb-0 p-1 rounded-lg"
+      >
+        <mat-icon class="md:!inline-block !hidden" svgIcon="add"></mat-icon>
         <span class="pl-2 text-lg">Add expense</span>
       </button>
-      <button routerLink="/charts" class="font-medium mr-5 flex items-center mb-0">
-        <mat-icon class="lg:!inline-block !hidden" svgIcon="charts"></mat-icon>
+      <button
+        routerLinkActive="active-header shadow"
+        routerLink="/charts"
+        class="font-medium mr-5 flex items-center mb-0 p-1 rounded-lg"
+      >
+        <mat-icon class="md:!inline-block !hidden" svgIcon="charts"></mat-icon>
         <span class="pl-2 text-lg">View charts</span>
       </button>
     </div>
     <div>
-      <button class="font-medium mr-5 flex items-center mb-0">
-        <mat-icon class="lg:!inline-block !hidden" svgIcon="logout"></mat-icon>
+      <button class="font-medium mr-5 flex items-center mb-0 p-1 header-logout rounded-lg">
+        <mat-icon class="md:!inline-block !hidden" svgIcon="logout"></mat-icon>
         <span class="pl-2 text-lg">Log out</span>
       </button>
     </div>

@@ -55,7 +55,7 @@
   <button
     mat-flat-button
     color="primary"
-    class="border-0 py-2 px-8 rounded text-lg hover:brightness-95"
+    class="border-0 py-2 px-8 !rounded-lg text-lg hover:brightness-95"
     (click)="formMode === formModes.CREATE ? create() : edit()"
   >
     <span class="text-white font-medium">{{ formMode === formModes.CREATE ? 'Create' : 'Update' }}</span>
@@ -63,7 +63,7 @@
   <button
     mat-flat-button
     color="accent"
-    class="border-0 mt-5 py-2 px-8 rounded text-lg hover:brightness-105"
+    class="border-0 mt-5 py-2 px-8 !rounded-lg text-lg hover:brightness-105"
     (click)="cancel()"
   >
     <span class="text-white font-medium">Cancel</span>
