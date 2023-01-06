@@ -73,5 +73,13 @@ export class IconRegistryModule {
       'logout',
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/logout.svg')
     );
+    this.matIconRegistry.addSvgIcon(
+      'account',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/account.svg')
+    );
+    this.matIconRegistry.addSvgIcon(
+      'dashboard',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/dashboard.svg')
+    );
   }
 }

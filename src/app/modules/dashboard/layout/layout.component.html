@@ -1,66 +1,90 @@
 <app-dom-portal [selector]="'#headerId'">
-  <ng-container *ngIf="{ value: isSmallScreen$ | async } as isSmallScreen">
-    <div *ngIf="!isSmallScreen.value" class="header-menu flex flex-nowrap justify-between">
-      <div class="flex flex-nowrap">
-        <button routerLink="/dashboard/add-expense" class="font-medium mr-5 flex items-center mb-0">
-          <mat-icon svgIcon="add"></mat-icon>
-          <span class="pl-2 text-lg">Add expense</span>
-        </button>
-        <button routerLink="/charts" class="font-medium mr-5 flex items-center mb-0">
-          <mat-icon svgIcon="charts"></mat-icon>
-          <span class="pl-2 text-lg">View charts</span>
-        </button>
-      </div>
-      <div>
-        <button class="font-medium mr-5 flex items-center mb-0">
-          <mat-icon svgIcon="logout"></mat-icon>
-          <span class="pl-2 text-lg">Log out</span>
-        </button>
-      </div>
+  <div class="header-menu flex flex-nowrap justify-between sm:!flex !hidden">
+    <div class="flex flex-nowrap">
+      <button routerLink="/dashboard" class="font-medium mr-5 flex items-center mb-0">
+        <mat-icon class="lg:!inline-block !hidden" svgIcon="dashboard"></mat-icon>
+        <span class="pl-2 text-lg">Dashboard</span>
+      </button>
+      <button routerLink="/dashboard/add-expense" class="font-medium mr-5 flex items-center mb-0">
+        <mat-icon class="lg:!inline-block !hidden" svgIcon="add"></mat-icon>
+        <span class="pl-2 text-lg">Add expense</span>
+      </button>
+      <button routerLink="/charts" class="font-medium mr-5 flex items-center mb-0">
+        <mat-icon class="lg:!inline-block !hidden" svgIcon="charts"></mat-icon>
+        <span class="pl-2 text-lg">View charts</span>
+      </button>
     </div>
+    <div>
+      <button class="font-medium mr-5 flex items-center mb-0">
+        <mat-icon class="lg:!inline-block !hidden" svgIcon="logout"></mat-icon>
+        <span class="pl-2 text-lg">Log out</span>
+      </button>
+    </div>
+  </div>
 
-    <button
-      mat-mini-fab
-      (click)="isOpen = !isOpen"
-      color="primary"
-      *ngIf="isSmallScreen.value"
-      class="mr-5 font-medium flex items-center mb-0"
-    >
-      <mat-icon svgIcon="menu"></mat-icon>
-    </button>
-  </ng-container>
+  <button
+    mat-stroked-button
+    (click)="isOpen = !isOpen"
+    class="!h-10 !border-2 mr-5 font-medium flex items-center mb-0 sm:!hidden !flex"
+  >
+    <mat-icon class="!m-0 scale-150" svgIcon="menu"></mat-icon>
+  </button>
 </app-dom-portal>
 
 <mat-sidenav-container class="h-full">
   <mat-sidenav [(opened)]="isOpen" class="w-[240px]" [fixedInViewport]="true">
-    <div class="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-slate-50 h-full">
-      <div class="absolute top-[6px] right-[6px] -mr-0 pt-2">
-        <button mat-icon-button (click)="isOpen = !isOpen">
-          <mat-icon svgIcon="close" class="text-gray-800"></mat-icon>
+    <div class="flex flex-col flex-nowrap justify-start max-w-xs w-full py-5 h-full">
+      <div class="absolute top-[5px] right-[5px] -mr-0 pt-2">
+        <button color="accent" mat-icon-button (click)="isOpen = !isOpen">
+          <mat-icon svgIcon="close" class="fill-black"></mat-icon>
         </button>
       </div>
 
-      <div class="flex-shrink-0 flex items-center px-4">
-        <div class="text-orange-500 font-medium text-lg ml-2">Foodify</div>
+      <div class="mt-5 flex justify-center items-center p-2">
+        <mat-icon class="!h-12 !w-12 flex justify-center scale-150" svgIcon="account"></mat-icon>
       </div>
 
-      <div class="pt-5 flex-1 h-0 overflow-y-auto">
-        <nav class="px-2 space-y-1">
-          <a
-            routerLink="/dashboard"
-            routerLinkActive="bg-gray-700 !text-white !hover:bg-gray-900"
-            class="text-gray-800 group flex items-center px-2 py-2 text-base font-medium rounded-md"
-          >
-            <span>Dashboard</span>
-          </a>
-          <a
-            routerLink="orders"
-            routerLinkActive="bg-gray-700 !text-white !hover:bg-gray-900"
-            class="text-gray-800 group flex items-center px-2 py-2 text-base font-medium rounded-md"
-          >
-            <span>Orders</span>
-          </a>
-        </nav>
+      <div class="flex justify-center items-center p-2">
+        <span class="w-full text-center font-bold text-lg">Gabriel Badarau</span>
+      </div>
+
+      <div class="mt-10 px-1">
+        <a
+          routerLink="/dashboard"
+          routerLinkActive="active !text-white"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="text-gray-800 flex items-center px-2 py-2 text-lg font-semibold rounded-md"
+        >
+          <mat-icon svgIcon="dashboard"></mat-icon>
+          <span class="pl-2">Dashboard</span>
+        </a>
+        <a
+          routerLink="/dashboard/add-expense"
+          routerLinkActive="active !text-white"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="text-gray-800 flex items-center px-2 py-2 text-lg font-semibold rounded-md"
+        >
+          <mat-icon svgIcon="add"></mat-icon>
+          <span class="pl-2">Add expense</span>
+        </a>
+        <a
+          routerLink="/charts"
+          routerLinkActive="active !text-white"
+          class="text-gray-800 flex items-center px-2 py-2 text-lg font-semibold rounded-md"
+        >
+          <mat-icon svgIcon="charts"></mat-icon>
+          <span class="pl-2">View charts</span>
+        </a>
+      </div>
+
+      <div class="mt-auto px-1">
+        <a
+          routerLink="/login"
+          class="logout-active text-white flex items-center px-2 py-2 text-lg font-semibold rounded-md"
+        >
+          <mat-icon svgIcon="logout"></mat-icon>
+          <span class="pl-2">Log out</span>
+        </a>
       </div>
     </div>
   </mat-sidenav>

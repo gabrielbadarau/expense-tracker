@@ -1,10 +1,10 @@
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 430px) {
   .under-password {
     margin-top: 0.8rem;
     flex-direction: column;
 
-    & button {
-      padding-right: 0.9rem;
+    & a {
+      padding-right: 1.1rem;
     }
   }
 }
