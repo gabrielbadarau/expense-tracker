@@ -16,6 +16,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const allMaterialModules = [
   CommonModule,
@@ -35,6 +36,7 @@ const allMaterialModules = [
   MatTabsModule,
   MatTooltipModule,
   MatSidenavModule,
+  MatDialogModule,
 ];
 
 @NgModule({
