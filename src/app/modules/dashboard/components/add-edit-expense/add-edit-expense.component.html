@@ -3,7 +3,7 @@
     {{ formMode === formModes.CREATE ? 'New expense' : 'Edit expense' }}
   </h1>
 </div>
-<div [formGroup]="form" class="w-96 rounded-lg p-8 flex flex-col">
+<div [formGroup]="form" class="form-container w-96 rounded-lg p-8 flex flex-col">
   <mat-form-field hideRequiredMarker="true" appearance="outline">
     <mat-label class="text-lg font-medium">Choose a date</mat-label>
     <input
