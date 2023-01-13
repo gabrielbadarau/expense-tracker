@@ -1,6 +1,6 @@
 export const environment = {
-  useEmulators: true,
-  production: false,
+  useEmulators: false,
+  production: true,
   firebase: {
     projectId: 'expense-tracker-424bd',
     appId: '1:715194197999:web:95a5b6e4876a6f6706381a',

@@ -17,12 +17,16 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
-// firestore setup
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
-import { provideAnalytics, getAnalytics, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
-import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+// firebase setup
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAnalyticsModule } from '@angular/fire/compat/analytics';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environments/environment';
+
+// firebase emulators
+import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/compat/auth';
+import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/compat/firestore';
 
 @NgModule({
   declarations: [AppComponent, RegisterComponent, LoginComponent, ResetPasswordComponent],
@@ -38,12 +42,18 @@ import { environment } from '../environments/environment';
     SnackBarComponentModule,
 
     // firestore setup
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAnalytics(() => getAnalytics()),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    // AngularFireAnalyticsModule
   ],
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, ScreenTrackingService, UserTrackingService],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+
+    // firebase emulator
+    { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['http://localhost:9099'] : undefined },
+    { provide: USE_FIRESTORE_EMULATOR, useValue: environment.useEmulators ? ['http://localhost:8080'] : undefined },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

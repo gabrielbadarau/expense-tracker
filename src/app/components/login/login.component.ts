@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { AuthService } from '../../shared/services/auth.service';
 import { SnackBarComponent } from '../../shared/components/snackbar/snackbar.component';
 import { emailValidator } from '../../shared/validators/email.validator';
 
@@ -15,11 +16,11 @@ export class LoginComponent {
 
   hidePassword = true;
 
-  constructor(private formBuilder: FormBuilder, private snackBar: MatSnackBar) {
+  constructor(private formBuilder: FormBuilder, private snackBar: MatSnackBar, public authService: AuthService) {
     this.userForm = this.initForm();
   }
 
-  login(): void {
+  login() {
     if (this.userForm.valid) {
       console.log(this.userForm);
     } else {
