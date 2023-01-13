@@ -81,5 +81,9 @@ export class IconRegistryModule {
       'dashboard',
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/dashboard.svg')
     );
+    this.matIconRegistry.addSvgIcon(
+      'email',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/email.svg')
+    );
   }
 }

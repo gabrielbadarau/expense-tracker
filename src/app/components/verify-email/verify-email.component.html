@@ -1,0 +1,37 @@
+<app-dom-portal [selector]="'#headerId'">
+  <div class="flex sm:justify-end justify-start">
+    <button class="font-medium mr-5 flex items-center mb-0 p-1 header-logout rounded-lg">
+      <mat-icon svgIcon="logout"></mat-icon>
+      <span class="pl-2 text-lg">Gabriel Badarau</span>
+    </button>
+  </div>
+</app-dom-portal>
+
+<div class="container flex px-5 py-8 mx-auto justify-center">
+  <mat-card class="flex px-1 rounded-lg text-white">
+    <mat-card-header>
+      <mat-card-title class="font-semibold text-xl text-slate-100">Please Verify Your Email Address</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content class="mt-2">
+      <p class="leading-relaxed text-md">
+        We have noticed that your email address has not been verified. Please verify your email in order to fully enjoy
+        this application.
+      </p>
+      <p class="leading-relaxed text-md">
+        The email was sent to <span class="font-semibold text-slate-100">gabrielbadarau@yahoo.com</span>. Please check
+        your "Spam" folder just in case.
+      </p>
+    </mat-card-content>
+    <mat-card-actions class="my-2">
+      <button color="accent" mat-raised-button class="font-medium mr-5 flex items-center mb-0 p-1 rounded-lg">
+        <mat-icon class="!h-7 !w-7" svgIcon="email"></mat-icon>
+        <span class="pl-2 text-lg">Resend Email</span>
+      </button>
+    </mat-card-actions>
+    <mat-divider class=""></mat-divider>
+    <mat-card-footer class="leading-relaxed text-slate-50 text-sm font-medium p-2">
+      If you still don't receive any email, please contact the administrator.
+    </mat-card-footer>
+  </mat-card>
+</div>

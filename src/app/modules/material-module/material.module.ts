@@ -17,6 +17,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
 
 const allMaterialModules = [
   CommonModule,
@@ -37,6 +39,8 @@ const allMaterialModules = [
   MatTooltipModule,
   MatSidenavModule,
   MatDialogModule,
+  MatCardModule,
+  MatDividerModule,
 ];
 
 @NgModule({

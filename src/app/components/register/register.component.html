@@ -21,7 +21,7 @@
     <mat-form-field hideRequiredMarker="true" appearance="outline">
       <mat-label class="text-lg">Enter your name</mat-label>
       <mat-error *ngIf="userForm.get('name')?.hasError('required')">Name is required</mat-error>
-      <input matInput formControlName="name" />
+      <input matInput maxlength="15" formControlName="name" />
     </mat-form-field>
 
     <mat-form-field hideRequiredMarker="true" appearance="outline">
