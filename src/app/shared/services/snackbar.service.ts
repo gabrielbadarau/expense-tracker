@@ -19,7 +19,13 @@ export class SnackBarService {
     });
   }
 
-  buildErrorMessage(error: string): string {
+  openServiceErrorSnackBar(message:string){
+    const messageError = this.buildErrorMessage(message);
+
+    this.openErrorSnackBar(messageError);
+  }
+
+  private buildErrorMessage(error: string): string {
     const a = error.indexOf(' ') + 1;
     const b = error.indexOf('.') + 1;
 

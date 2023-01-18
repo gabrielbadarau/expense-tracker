@@ -29,7 +29,7 @@
       </button>
     </div>
     <div>
-      <button class="font-medium mr-5 flex items-center mb-0 p-1 header-logout rounded-lg">
+      <button class="font-medium mr-5 flex items-center mb-0 p-1 header-logout rounded-lg" (click)="logout()">
         <mat-icon class="md:!inline-block !hidden" svgIcon="logout"></mat-icon>
         <span class="md:pl-2 text-lg lg:!inline-block !hidden">Gabriel Badarau</span>
         <span class="md:pl-2 text-lg lg:!hidden">Log out</span>
@@ -94,7 +94,7 @@
 
       <div class="mt-auto px-1">
         <a
-          routerLink="/login"
+          (click)="logout()"
           class="logout-active text-white flex items-center px-2 py-2 text-lg font-semibold rounded-md"
         >
           <mat-icon svgIcon="logout"></mat-icon>

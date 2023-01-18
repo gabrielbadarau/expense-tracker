@@ -14,7 +14,7 @@ export class AuthService {
   constructor(private auth: AngularFireAuth) {}
 
   login({ email, password }: LoginData) {
-    return from(this.auth.signInWithEmailAndPassword(email, password));
+    return this.auth.signInWithEmailAndPassword(email, password);
   }
 
   register({ email, password }: LoginData) {
@@ -22,6 +22,6 @@ export class AuthService {
   }
 
   logout() {
-    return from(this.auth.signOut());
+    return this.auth.signOut();
   }
 }
