@@ -6,7 +6,7 @@ import { SnackBarService } from '../../shared/services/snackbar.service';
 import { emailValidator } from '../../shared/validators/email.validator';
 import { LoginData } from '../../shared/model/login-data.model';
 
-import { omit } from 'lodash';
+import { indexOf, omit } from 'lodash';
 import { Router } from '@angular/router';
 
 @Component({
@@ -37,11 +37,17 @@ export class RegisterComponent {
           this.router.navigate(['/dashboard']);
 
           // Updating display name
-          res.user
-            ?.updateProfile({ displayName: this.userForm.value.name })
-            .catch((error) => console.log('Smth went wrogn with updating your name'));
+          res.user?.updateProfile({ displayName: this.userForm.value.name }).catch((error) => {
+            const message = this.snackBarService.buildErrorMessage(error.message);
+
+            this.snackBarService.openErrorSnackBar(message);
+          });
         },
-        (error) => console.log('Smth went wrong with creating a new account')
+        (error) => {
+          const message = this.snackBarService.buildErrorMessage(error.message);
+
+          this.snackBarService.openErrorSnackBar(message);
+        }
       );
     } else {
       this.snackBarService.openErrorSnackBar('Check your form errors.');

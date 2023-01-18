@@ -18,4 +18,11 @@ export class SnackBarService {
       panelClass: ['error-snackbar'],
     });
   }
+
+  buildErrorMessage(error: string): string {
+    const a = error.indexOf(' ') + 1;
+    const b = error.indexOf('.') + 1;
+
+    return error.substring(a, b);
+  }
 }
