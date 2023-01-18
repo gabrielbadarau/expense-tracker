@@ -1,0 +1,21 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Injectable } from '@angular/core';
+
+import { SnackBarComponent } from '../components/snackbar/snackbar.component';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class SnackBarService {
+  constructor(private snackBar: MatSnackBar) {}
+
+  openErrorSnackBar(message: string): void {
+    this.snackBar.openFromComponent(SnackBarComponent, {
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+      data: message,
+      duration: 4000,
+      panelClass: ['error-snackbar'],
+    });
+  }
+}

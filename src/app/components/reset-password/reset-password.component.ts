@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { SnackBarComponent } from '../../shared/components/snackbar/snackbar.component';
+import { SnackBarService } from '../../shared/services/snackbar.service';
 import { emailValidator } from '../../shared/validators/email.validator';
 
 @Component({
@@ -13,7 +12,7 @@ import { emailValidator } from '../../shared/validators/email.validator';
 export class ResetPasswordComponent {
   userForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private snackBar: MatSnackBar) {
+  constructor(private formBuilder: FormBuilder, private snackBarService: SnackBarService) {
     this.userForm = this.initForm();
   }
 
@@ -21,23 +20,13 @@ export class ResetPasswordComponent {
     if (this.userForm.valid) {
       console.log(this.userForm);
     } else {
-      this.openErrorSnackBar();
+      this.snackBarService.openErrorSnackBar('Check your form errors.');
     }
   }
 
   private initForm(): FormGroup {
     return this.formBuilder.group({
       email: ['', [Validators.required, emailValidator]],
-    });
-  }
-
-  private openErrorSnackBar(): void {
-    this.snackBar.openFromComponent(SnackBarComponent, {
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-      data: 'Check your form errors.',
-      duration: 4000,
-      panelClass: 'error-snackbar',
     });
   }
 }

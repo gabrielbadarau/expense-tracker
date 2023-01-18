@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { tap } from 'rxjs';
 import { FormMode } from 'src/app/shared/model/form-mode.model';
 
-import { SnackBarComponent } from '../../../../shared/components/snackbar/snackbar.component';
+import { SnackBarService } from '../../../../shared/services/snackbar.service';
 import { ExpenseCategory } from '../../../../shared/model/expense-category.model';
 
 @UntilDestroy()
@@ -28,7 +27,7 @@ export class AddEditExpense implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private snackBar: MatSnackBar,
+    private snackBarService: SnackBarService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
@@ -48,11 +47,11 @@ export class AddEditExpense implements OnInit {
 
   create(): void {
     if (this.form.valid) {
-      this.form.value.date = this.form.value.date.toISOString()
+      this.form.value.date = this.form.value.date.toISOString();
       console.log(this.form.value);
     } else {
       this.form.markAllAsTouched();
-      this.openErrorSnackBar();
+      this.snackBarService.openErrorSnackBar('Check your form errors.');
     }
   }
 
@@ -61,7 +60,7 @@ export class AddEditExpense implements OnInit {
       console.log(this.form.value);
     } else {
       this.form.markAllAsTouched();
-      this.openErrorSnackBar();
+      this.snackBarService.openErrorSnackBar('Check your form errors.');
     }
   }
 
@@ -76,16 +75,6 @@ export class AddEditExpense implements OnInit {
       category: ['', [Validators.required]],
       amount: ['', [Validators.required, Validators.max(1000000)]],
       description: [''],
-    });
-  }
-
-  private openErrorSnackBar(): void {
-    this.snackBar.openFromComponent(SnackBarComponent, {
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-      data: 'Check your form errors.',
-      duration: 4000,
-      panelClass: ['error-snackbar'],
     });
   }
 }

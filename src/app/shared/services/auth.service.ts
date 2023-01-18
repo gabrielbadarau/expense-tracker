@@ -9,6 +9,8 @@ import { LoginData } from '../model/login-data.model';
   providedIn: 'root',
 })
 export class AuthService {
+  getUser$ = this.auth.user;
+
   constructor(private auth: AngularFireAuth) {}
 
   login({ email, password }: LoginData) {
@@ -16,18 +18,10 @@ export class AuthService {
   }
 
   register({ email, password }: LoginData) {
-    return from(this.auth.createUserWithEmailAndPassword(email, password));
+    return this.auth.createUserWithEmailAndPassword(email, password);
   }
 
   logout() {
     return from(this.auth.signOut());
-  }
-
-  getUser() {
-    return this.auth.user;
-  }
-
-  async updateDisplayName() {
-    // return (await this.auth.currentUser)?.updateProfile();
   }
 }

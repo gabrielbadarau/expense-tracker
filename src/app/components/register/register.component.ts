@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AuthService } from '../../shared/services/auth.service';
-import { SnackBarComponent } from '../../shared/components/snackbar/snackbar.component';
+import { SnackBarService } from '../../shared/services/snackbar.service';
 import { emailValidator } from '../../shared/validators/email.validator';
+import { LoginData } from '../../shared/model/login-data.model';
+
+import { omit } from 'lodash';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -16,15 +19,32 @@ export class RegisterComponent {
 
   hidePassword = true;
 
-  constructor(private formBuilder: FormBuilder, private snackBar: MatSnackBar, public authService: AuthService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private snackBarService: SnackBarService,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.userForm = this.initForm();
   }
 
   register(): void {
     if (this.userForm.valid) {
-      console.log(this.userForm);
+      let data = omit(this.userForm.value, ['name']) as LoginData;
+
+      this.authService.register(data).then(
+        (res) => {
+          this.router.navigate(['/dashboard']);
+
+          // Updating display name
+          res.user
+            ?.updateProfile({ displayName: this.userForm.value.name })
+            .catch((error) => console.log('Smth went wrogn with updating your name'));
+        },
+        (error) => console.log('Smth went wrong with creating a new account')
+      );
     } else {
-      this.openErrorSnackBar();
+      this.snackBarService.openErrorSnackBar('Check your form errors.');
     }
   }
 
@@ -33,16 +53,6 @@ export class RegisterComponent {
       name: ['', Validators.required],
       email: ['', [Validators.required, emailValidator]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-    });
-  }
-
-  private openErrorSnackBar(): void {
-    this.snackBar.openFromComponent(SnackBarComponent, {
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-      data: 'Check your form errors.',
-      duration: 4000,
-      panelClass: ['error-snackbar'],
     });
   }
 }
