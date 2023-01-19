@@ -22,7 +22,7 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAnalyticsModule } from '@angular/fire/compat/analytics';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireAuthModule, PERSISTENCE } from '@angular/fire/compat/auth';
 import { environment } from '../environments/environment';
 
 // firebase emulators
@@ -50,6 +50,9 @@ import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/compat/fir
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+
+    //  firebase auth persistence
+    { provide: PERSISTENCE, useValue: 'session' },
 
     // firebase emulator
     { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['http://localhost:9099'] : undefined },

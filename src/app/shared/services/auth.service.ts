@@ -21,6 +21,10 @@ export class AuthService {
     return defer(() => this.auth.createUserWithEmailAndPassword(email, password));
   }
 
+  setPersistenceLocal() {
+    return defer(() => this.auth.setPersistence('local'));
+  }
+
   logout() {
     return defer(() => this.auth.signOut());
   }

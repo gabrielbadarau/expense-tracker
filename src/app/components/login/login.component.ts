@@ -8,7 +8,7 @@ import { emailValidator } from '../../shared/validators/email.validator';
 import { LoginData } from '../../shared/model/login-data.model';
 
 import { omit } from 'lodash';
-import { catchError, of, tap } from 'rxjs';
+import { catchError, concatMap, of, tap, EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +18,7 @@ import { catchError, of, tap } from 'rxjs';
 export class LoginComponent {
   userForm!: FormGroup;
 
+  isRememberMeChecked = false;
   hidePassword = true;
 
   constructor(
@@ -31,12 +32,21 @@ export class LoginComponent {
 
   login() {
     if (this.userForm.valid) {
-      let data = omit(this.userForm.value, ['name']) as LoginData;
+      let data = omit(this.userForm.value, ['checkedRememberMe']) as LoginData;
 
       this.authService
         .login(data)
         .pipe(
           tap(() => this.router.navigate(['/dashboard'])),
+          concatMap(() => {
+            if (this.userForm.value.checkedRememberMe) {
+              return this.authService
+                .setPersistenceLocal()
+                .pipe(catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message))));
+            } else {
+              return EMPTY;
+            }
+          }),
           catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
         )
         .subscribe();
@@ -49,6 +59,7 @@ export class LoginComponent {
     return this.formBuilder.group({
       email: ['', [Validators.required, emailValidator]],
       password: ['', [Validators.required, Validators.minLength(8)]],
+      checkedRememberMe: [false],
     });
   }
 }
