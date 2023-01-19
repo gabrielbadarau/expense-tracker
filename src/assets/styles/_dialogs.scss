@@ -23,6 +23,14 @@
   }
 }
 
+.success-snackbar {
+  --mdc-snackbar-container-color: #9daf89;
+
+  .mat-simple-snackbar-action {
+    color: white;
+  }
+}
+
 .mat-tooltip {
   @apply bg-gray-700;
   @apply text-white;

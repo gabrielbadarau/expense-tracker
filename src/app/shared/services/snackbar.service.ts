@@ -9,6 +9,16 @@ import { SnackBarComponent } from '../components/snackbar/snackbar.component';
 export class SnackBarService {
   constructor(private snackBar: MatSnackBar) {}
 
+  openSuccessSnackBar(message: string): void {
+    this.snackBar.openFromComponent(SnackBarComponent, {
+      horizontalPosition: 'end',
+      verticalPosition: 'top',
+      data: message,
+      duration: 4000,
+      panelClass: ['success-snackbar'],
+    });
+  }
+
   openErrorSnackBar(message: string): void {
     this.snackBar.openFromComponent(SnackBarComponent, {
       horizontalPosition: 'end',
@@ -19,7 +29,7 @@ export class SnackBarService {
     });
   }
 
-  openServiceErrorSnackBar(message:string){
+  openServiceErrorSnackBar(message: string) {
     const messageError = this.buildErrorMessage(message);
 
     this.openErrorSnackBar(messageError);
