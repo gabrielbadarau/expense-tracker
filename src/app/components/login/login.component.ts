@@ -8,6 +8,7 @@ import { emailValidator } from '../../shared/validators/email.validator';
 import { LoginData } from '../../shared/model/login-data.model';
 
 import { omit } from 'lodash';
+import { catchError, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -32,10 +33,13 @@ export class LoginComponent {
     if (this.userForm.valid) {
       let data = omit(this.userForm.value, ['name']) as LoginData;
 
-      this.authService.login(data).then(
-        () => this.router.navigate(['/dashboard']),
-        (error) => this.snackBarService.openServiceErrorSnackBar(error.message)
-      );
+      this.authService
+        .login(data)
+        .pipe(
+          tap(() => this.router.navigate(['/dashboard'])),
+          catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
+        )
+        .subscribe();
     } else {
       this.snackBarService.openErrorSnackBar('Check your form errors.');
     }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { AuthService } from '../../shared/services/auth.service';
 import { SnackBarService } from '../../shared/services/snackbar.service';
@@ -7,7 +8,7 @@ import { emailValidator } from '../../shared/validators/email.validator';
 import { LoginData } from '../../shared/model/login-data.model';
 
 import { omit } from 'lodash';
-import { Router } from '@angular/router';
+import { catchError, concatMap, defer, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -32,17 +33,21 @@ export class RegisterComponent {
     if (this.userForm.valid) {
       let data = omit(this.userForm.value, ['name']) as LoginData;
 
-      this.authService.register(data).then(
-        (res) => {
-          this.router.navigate(['/dashboard']);
-
-          // Updating display name
-          res.user?.updateProfile({ displayName: this.userForm.value.name }).catch((error) => {
-            this.snackBarService.openServiceErrorSnackBar(error.message);
-          });
-        },
-        (error) => this.snackBarService.openServiceErrorSnackBar(error.message)
-      );
+      this.authService
+        .register(data)
+        .pipe(
+          tap(() => this.router.navigate(['/dashboard'])),
+          concatMap((res) => {
+            const updateProfile$ = defer(async () =>
+              res.user?.updateProfile({ displayName: this.userForm.value.name })
+            );
+            return updateProfile$.pipe(
+              catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
+            );
+          }),
+          catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
+        )
+        .subscribe();
     } else {
       this.snackBarService.openErrorSnackBar('Check your form errors.');
     }
