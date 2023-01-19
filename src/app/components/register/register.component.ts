@@ -8,7 +8,7 @@ import { emailValidator } from '../../shared/validators/email.validator';
 import { LoginData } from '../../shared/model/login-data.model';
 
 import { omit } from 'lodash';
-import { catchError, concatMap, defer, of, tap } from 'rxjs';
+import { catchError, concatMap, defer, of, tap, concat } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -41,8 +41,15 @@ export class RegisterComponent {
             const updateProfile$ = defer(async () =>
               res.user?.updateProfile({ displayName: this.userForm.value.name })
             );
-            return updateProfile$.pipe(
-              catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
+            const sendVerificationEmail$ = defer(async () => res.user?.sendEmailVerification());
+
+            return concat(
+              updateProfile$.pipe(
+                catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
+              ),
+              sendVerificationEmail$.pipe(
+                catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
+              )
             );
           }),
           catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))

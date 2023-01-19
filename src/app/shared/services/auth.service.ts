@@ -25,6 +25,10 @@ export class AuthService {
     return defer(() => this.auth.setPersistence('local'));
   }
 
+  sendPasswordResetEmail(email: string) {
+    return defer(() => this.auth.sendPasswordResetEmail(email));
+  }
+
   logout() {
     return defer(() => this.auth.signOut());
   }
