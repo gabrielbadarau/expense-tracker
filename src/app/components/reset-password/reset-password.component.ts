@@ -31,11 +31,11 @@ export class ResetPasswordComponent {
       this.authService
         .sendPasswordResetEmail(this.userForm.value.email)
         .pipe(
-          tap(() => of(this.snackBarService.openSuccessSnackBar('A password reset email has been sent successfully.'))),
-          finalize(() => {
-            this.isLoading = false;
+          tap(() => {
             this.userForm.reset();
+            of(this.snackBarService.openSuccessSnackBar('A password reset email has been sent successfully.'));
           }),
+          finalize(() => (this.isLoading = false)),
           catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
         )
         .subscribe();

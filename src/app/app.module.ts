@@ -12,6 +12,7 @@ import { IconRegistryModule } from './modules/icon-registry-module/icon-registry
 import { MaterialModule } from './modules/material-module/material.module';
 import { DomPortalModule } from './shared/components/dom-portal/dom-portal.module';
 import { SnackBarComponentModule } from './shared/components/snackbar/snackbar.module';
+import { VerifiedEmailGuard } from './shared/guards/verified-email.guard';
 
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
@@ -49,6 +50,7 @@ import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/compat/fir
     // AngularFireAnalyticsModule
   ],
   providers: [
+    VerifiedEmailGuard,
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
 
     //  firebase auth persistence
