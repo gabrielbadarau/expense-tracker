@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { catchError, of, tap } from 'rxjs';
+import { catchError, finalize, of, tap } from 'rxjs';
 
 import { AuthService } from '../../shared/services/auth.service';
 import { SnackBarService } from '../../shared/services/snackbar.service';
@@ -13,6 +13,7 @@ import { emailValidator } from '../../shared/validators/email.validator';
   styleUrls: ['./reset-password.component.scss'],
 })
 export class ResetPasswordComponent {
+  isLoading = false;
   userForm!: FormGroup;
 
   constructor(
@@ -25,10 +26,16 @@ export class ResetPasswordComponent {
 
   resetPassword(): void {
     if (this.userForm.valid) {
+      this.isLoading = true;
+
       this.authService
         .sendPasswordResetEmail(this.userForm.value.email)
         .pipe(
           tap(() => of(this.snackBarService.openSuccessSnackBar('A password reset email has been sent successfully.'))),
+          finalize(() => {
+            this.isLoading = false;
+            this.userForm.reset();
+          }),
           catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
         )
         .subscribe();

@@ -8,7 +8,7 @@ import { emailValidator } from '../../shared/validators/email.validator';
 import { LoginData } from '../../shared/model/login-data.model';
 
 import { omit } from 'lodash';
-import { catchError, concatMap, defer, of, tap, concat } from 'rxjs';
+import { catchError, concatMap, defer, of, tap, concat, finalize } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +16,7 @@ import { catchError, concatMap, defer, of, tap, concat } from 'rxjs';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
+  isLoading = false;
   userForm!: FormGroup;
 
   hidePassword = true;
@@ -31,12 +32,14 @@ export class RegisterComponent {
 
   register(): void {
     if (this.userForm.valid) {
+      this.isLoading = true;
       let data = omit(this.userForm.value, ['name']) as LoginData;
 
       this.authService
         .register(data)
         .pipe(
           tap(() => this.router.navigate(['/dashboard'])),
+          finalize(() => (this.isLoading = false)),
           concatMap((res) => {
             const updateProfile$ = defer(async () =>
               res.user?.updateProfile({ displayName: this.userForm.value.name })

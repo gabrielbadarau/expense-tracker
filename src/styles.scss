@@ -100,3 +100,7 @@ body {
     padding-right: 0px !important;
   }
 }
+
+.mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: white;
+}

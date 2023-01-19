@@ -19,6 +19,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const allMaterialModules = [
   CommonModule,
@@ -41,6 +42,7 @@ const allMaterialModules = [
   MatDialogModule,
   MatCardModule,
   MatDividerModule,
+  MatProgressSpinnerModule,
 ];
 
 @NgModule({

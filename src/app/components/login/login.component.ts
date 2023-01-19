@@ -8,7 +8,7 @@ import { emailValidator } from '../../shared/validators/email.validator';
 import { LoginData } from '../../shared/model/login-data.model';
 
 import { omit } from 'lodash';
-import { catchError, concatMap, of, tap, EMPTY } from 'rxjs';
+import { catchError, concatMap, of, tap, EMPTY, finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +16,7 @@ import { catchError, concatMap, of, tap, EMPTY } from 'rxjs';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+  isLoading = false;
   userForm!: FormGroup;
 
   isRememberMeChecked = false;
@@ -32,12 +33,14 @@ export class LoginComponent {
 
   login() {
     if (this.userForm.valid) {
+      this.isLoading = true;
       let data = omit(this.userForm.value, ['checkedRememberMe']) as LoginData;
 
       this.authService
         .login(data)
         .pipe(
           tap(() => this.router.navigate(['/dashboard'])),
+          finalize(() => (this.isLoading = false)),
           concatMap(() => {
             if (this.userForm.value.checkedRememberMe) {
               return this.authService

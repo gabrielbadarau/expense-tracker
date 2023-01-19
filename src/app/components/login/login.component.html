@@ -47,7 +47,12 @@
       class="border-0 py-2 px-8 !rounded-lg text-lg hover:brightness-95"
       (click)="login()"
     >
-      <span class="text-white">Login</span>
+      <ng-container *ngIf="!isLoading; else spinner">
+        <span class="text-white">Login</span>
+      </ng-container>
+      <ng-template #spinner>
+        <mat-spinner strokeWidth="4" diameter="30"></mat-spinner>
+      </ng-template>
     </button>
 
     <p class="text-xs text-gray-500 mt-3 text-center">
