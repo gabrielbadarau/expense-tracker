@@ -1,14 +1,14 @@
 {
   "targets": {
-    "expense-tracker-424bd": {
+    "expensetracker-bd": {
       "hosting": {
         "expense-tracker": [
-          "expense-tracker-bg"
+          "expensetracker-bd"
         ]
       }
     }
   },
   "projects": {
-    "default": "expense-tracker-424bd"
+    "default": "expensetracker-bd"
   }
 }

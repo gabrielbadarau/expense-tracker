@@ -83,8 +83,8 @@
             "prerender": false,
             "ssr": false,
             "browserTarget": "expense-tracker:build:production",
-            "firebaseProject": "expense-tracker-424bd",
-            "firebaseHostingSite": "expense-tracker-bg"
+            "firebaseProject": "expensetracker-bd",
+            "firebaseHostingSite": "expensetracker-bd"
           }
         }
       }
