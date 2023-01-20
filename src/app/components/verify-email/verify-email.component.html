@@ -2,7 +2,7 @@
   <div class="flex sm:justify-end justify-start">
     <button (click)="logout()" class="font-medium mr-5 flex items-center mb-0 p-1 header-logout rounded-lg">
       <mat-icon svgIcon="logout"></mat-icon>
-      <span class="pl-2 text-lg">{{ userName }}</span>
+      <span class="pl-2 text-lg">Log Out</span>
     </button>
   </div>
 </app-dom-portal>
@@ -24,9 +24,21 @@
       </p>
     </mat-card-content>
     <mat-card-actions class="my-2">
-      <button (click)="resendEmail()" color="accent" mat-raised-button class="font-medium mr-5 flex items-center mb-0 p-1 rounded-lg">
-        <mat-icon class="!h-7 !w-7" svgIcon="email"></mat-icon>
-        <span class="pl-2 text-lg">Resend Email</span>
+      <button
+        (click)="resendEmail()"
+        color="accent"
+        mat-raised-button
+        class="!flex font-medium mb-0 p-1 !rounded-lg w-48"
+      >
+        <ng-container *ngIf="!isLoading; else spinner">
+          <span class="pl-2 text-lg flex justify-center">
+            <mat-icon class="!h-7 !w-7 mr-2" svgIcon="email"></mat-icon>
+            Resend Email
+          </span>
+        </ng-container>
+        <ng-template #spinner>
+          <mat-spinner strokeWidth="4" diameter="30"></mat-spinner>
+        </ng-template>
       </button>
     </mat-card-actions>
     <mat-divider class=""></mat-divider>

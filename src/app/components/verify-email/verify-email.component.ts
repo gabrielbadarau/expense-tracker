@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
-import { tap, catchError, of, defer, Observable } from 'rxjs';
+import { tap, catchError, of, defer, Observable, finalize } from 'rxjs';
 
 import { AuthService } from '../../shared/services/auth.service';
 import { SnackBarService } from '../../shared/services/snackbar.service';
@@ -14,7 +14,7 @@ import { SnackBarService } from '../../shared/services/snackbar.service';
   styleUrls: ['./verify-email.component.scss'],
 })
 export class VerifyEmailComponent implements OnInit {
-  userName: string | null | undefined;
+  isLoading!: boolean;
   email: string | null | undefined;
   sendVerificationEmail!: Observable<any>;
 
@@ -28,15 +28,23 @@ export class VerifyEmailComponent implements OnInit {
           this.sendVerificationEmail = defer(async () =>
             user?.sendEmailVerification({ url: 'https://expensetracker-bd.firebaseapp.com/dashboard' })
           );
-          this.userName = user?.displayName;
           this.email = user?.email;
-        })
+        }),
+        catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
       )
       .subscribe();
   }
 
   resendEmail(): void {
-    this.sendVerificationEmail.subscribe();
+    this.isLoading = true;
+
+    this.sendVerificationEmail
+      .pipe(
+        tap(() => of(this.snackBarService.openSuccessSnackBar('A verification email has been sent successfully.'))),
+        catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message))),
+        finalize(() => (this.isLoading = false))
+      )
+      .subscribe();
   }
 
   logout(): void {
