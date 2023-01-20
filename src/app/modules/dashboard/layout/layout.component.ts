@@ -23,7 +23,11 @@ export class LayoutComponent implements OnInit {
     this.authService.getUser$
       .pipe(
         untilDestroyed(this),
-        tap((user) => (this.userName = user?.displayName))
+        tap((user) => (this.userName = user?.displayName)),
+        catchError((error) => {
+          this.router.navigate(['/login']);
+          return of(this.snackBarService.openServiceErrorSnackBar(error.message));
+        })
       )
       .subscribe();
   }
