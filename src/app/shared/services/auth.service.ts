@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   sendPasswordResetEmail(email: string) {
-    return defer(() => this.auth.sendPasswordResetEmail(email));
+    return defer(() => this.auth.sendPasswordResetEmail(email, { url: 'expensetracker-bd.web.app/login' }));
   }
 
   logout() {

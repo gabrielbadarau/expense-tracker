@@ -25,7 +25,9 @@ export class VerifyEmailComponent implements OnInit {
       .pipe(
         untilDestroyed(this),
         tap((user) => {
-          this.sendVerificationEmail = defer(async () => user?.sendEmailVerification());
+          this.sendVerificationEmail = defer(async () =>
+            user?.sendEmailVerification({ url: 'expensetracker-bd.web.app/login' })
+          );
           this.email = user?.email;
         }),
         catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))

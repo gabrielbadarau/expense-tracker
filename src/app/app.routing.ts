@@ -6,7 +6,6 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
-import { ReceiveEmailVerificationComponent } from './components/receive-email-verification/receive-email-verification.component';
 
 import { VerifiedEmailGuard } from './shared/guards/verified-email.guard';
 
@@ -40,10 +39,6 @@ const routes: Routes = [
     path: 'verify-email',
     component: VerifyEmailComponent,
     canActivate: [VerifiedEmailGuard],
-  },
-  {
-    path: 'receive-email-verification',
-    component: ReceiveEmailVerificationComponent,
   },
   {
     path: '',

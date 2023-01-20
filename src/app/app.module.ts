@@ -18,7 +18,6 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
-import { ReceiveEmailVerificationComponent } from './components/receive-email-verification/receive-email-verification.component';
 
 // firebase setup
 import { AngularFireModule } from '@angular/fire/compat';
@@ -32,14 +31,7 @@ import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/compat/auth';
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/compat/firestore';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    RegisterComponent,
-    LoginComponent,
-    ResetPasswordComponent,
-    VerifyEmailComponent,
-    ReceiveEmailVerificationComponent,
-  ],
+  declarations: [AppComponent, RegisterComponent, LoginComponent, ResetPasswordComponent, VerifyEmailComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
