@@ -15,19 +15,37 @@ export class VerifiedEmailGuard implements CanActivate {
     if (route.routeConfig?.path === 'verify-email') {
       return this.authService.getUser$.pipe(
         map((user) => {
-          if (user?.emailVerified) {
-            this.router.navigate(['/dashboard']);
+          switch (user?.emailVerified) {
+            case undefined: {
+              this.router.navigate(['/login']);
+              return false;
+            }
+            case true: {
+              this.router.navigate(['/dashboard']);
+              return false;
+            }
+            case false: {
+              return true;
+            }
           }
-          return !user?.emailVerified as boolean;
         })
       );
     } else {
       return this.authService.getUser$.pipe(
         map((user) => {
-          if (!user?.emailVerified) {
-            this.router.navigate(['/verify-email']);
+          switch (user?.emailVerified) {
+            case undefined: {
+              this.router.navigate(['/login']);
+              return false;
+            }
+            case true: {
+              return true;
+            }
+            case false: {
+              this.router.navigate(['/verify-email']);
+              return false;
+            }
           }
-          return user?.emailVerified as boolean;
         })
       );
     }

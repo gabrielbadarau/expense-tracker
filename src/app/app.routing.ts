@@ -34,13 +34,16 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadChildren: () => import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule),
-    canActivate: [AngularFireAuthGuard, VerifiedEmailGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin },
+    canActivate: [VerifiedEmailGuard],
   },
   {
     path: 'verify-email',
     component: VerifyEmailComponent,
-    canActivate: [AngularFireAuthGuard, VerifiedEmailGuard],
+    canActivate: [VerifiedEmailGuard],
+  },
+  {
+    path: 'email-verified',
+    component: VerifyEmailComponent,
   },
   {
     path: '',

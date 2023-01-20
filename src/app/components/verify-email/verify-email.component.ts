@@ -25,9 +25,7 @@ export class VerifyEmailComponent implements OnInit {
       .pipe(
         untilDestroyed(this),
         tap((user) => {
-          this.sendVerificationEmail = defer(async () =>
-            user?.sendEmailVerification({ url: 'https://expensetracker-bd.firebaseapp.com/dashboard' })
-          );
+          this.sendVerificationEmail = defer(async () => user?.sendEmailVerification());
           this.email = user?.email;
         }),
         catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
