@@ -45,7 +45,7 @@ export class RegisterComponent {
               res.user?.updateProfile({ displayName: this.userForm.value.name })
             );
             const sendVerificationEmail$ = defer(async () =>
-              res.user?.sendEmailVerification({ url: 'expensetracker-bd.web.app/login' })
+              res.user?.sendEmailVerification({ url: 'https://expensetracker-bd.web.app/login' })
             );
 
             return concat(
