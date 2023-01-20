@@ -26,6 +26,10 @@ export class VerifyEmailComponent implements OnInit {
         tap((user) => {
           this.userName = user?.displayName;
           this.email = user?.email;
+
+          if (user?.emailVerified) {
+            this.router.navigate(['/dashboard']);
+          }
         })
       )
       .subscribe();
