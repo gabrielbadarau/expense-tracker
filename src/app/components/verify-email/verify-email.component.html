@@ -2,7 +2,7 @@
   <div class="flex sm:justify-end justify-start">
     <button (click)="logout()" class="font-medium mr-5 flex items-center mb-0 p-1 header-logout rounded-lg">
       <mat-icon svgIcon="logout"></mat-icon>
-      <span class="pl-2 text-lg">Log Out</span>
+      <span class="pl-2 text-lg">{{ userName }}</span>
     </button>
   </div>
 </app-dom-portal>
@@ -19,8 +19,8 @@
         this application.
       </p>
       <p class="leading-relaxed text-md">
-        The email was sent to <span class="font-semibold text-slate-100">gabrielbadarau@yahoo.com</span>. Please check
-        your "Spam" folder just in case.
+        The email was sent to <span class="font-semibold text-slate-100">{{ email }}</span
+        >. Please check your "Spam" folder just in case.
       </p>
     </mat-card-content>
     <mat-card-actions class="my-2">
