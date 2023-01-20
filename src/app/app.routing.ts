@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AngularFireAuthGuard, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
+import { AngularFireAuthGuard, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
 
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { ReceiveEmailVerificationComponent } from './components/receive-email-verification/receive-email-verification.component';
 
 import { VerifiedEmailGuard } from './shared/guards/verified-email.guard';
 
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 const redirectLoggedInUserToDashboard = () => redirectLoggedInTo(['dashboard']);
 
 const routes: Routes = [
@@ -42,8 +42,8 @@ const routes: Routes = [
     canActivate: [VerifiedEmailGuard],
   },
   {
-    path: 'email-verified',
-    component: VerifyEmailComponent,
+    path: 'receive-email-verification',
+    component: ReceiveEmailVerificationComponent,
   },
   {
     path: '',
