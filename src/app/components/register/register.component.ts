@@ -38,8 +38,8 @@ export class RegisterComponent {
       this.authService
         .register(data)
         .pipe(
-          tap(() => this.router.navigate(['/dashboard'])),
           finalize(() => (this.isLoading = false)),
+          tap(() => this.router.navigate(['/dashboard'])),
           concatMap((res) => {
             const updateProfile$ = defer(async () =>
               res.user?.updateProfile({ displayName: this.userForm.value.name })
@@ -53,6 +53,11 @@ export class RegisterComponent {
               sendVerificationEmail$.pipe(
                 catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
               )
+            ).pipe(
+              finalize(() => {
+                this.isLoading = false;
+                this.router.navigate(['/verify-email']);
+              })
             );
           }),
           catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))

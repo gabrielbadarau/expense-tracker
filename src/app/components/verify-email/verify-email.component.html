@@ -19,14 +19,26 @@
         this application.
       </p>
       <p class="leading-relaxed text-md">
-        The email was sent to <span class="font-semibold text-slate-100">gabrielbadarau@yahoo.com</span>. Please check
-        your "Spam" folder just in case.
+        The email was sent to <span class="font-semibold text-slate-100">{{ email }}</span
+        >. Please check your "Spam" folder just in case.
       </p>
     </mat-card-content>
     <mat-card-actions class="my-2">
-      <button color="accent" mat-raised-button class="font-medium mr-5 flex items-center mb-0 p-1 rounded-lg">
-        <mat-icon class="!h-7 !w-7" svgIcon="email"></mat-icon>
-        <span class="pl-2 text-lg">Resend Email</span>
+      <button
+        (click)="resendEmail()"
+        color="accent"
+        mat-raised-button
+        class="!flex font-medium mb-0 p-1 !rounded-lg w-48"
+      >
+        <ng-container *ngIf="!isLoading; else spinner">
+          <span class="pl-2 text-lg flex justify-center">
+            <mat-icon class="!h-7 !w-7 mr-2" svgIcon="email"></mat-icon>
+            Resend Email
+          </span>
+        </ng-container>
+        <ng-template #spinner>
+          <mat-spinner strokeWidth="4" diameter="30"></mat-spinner>
+        </ng-template>
       </button>
     </mat-card-actions>
     <mat-divider class=""></mat-divider>

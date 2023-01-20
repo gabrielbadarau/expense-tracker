@@ -40,7 +40,7 @@ const routes: Routes = [
   {
     path: 'verify-email',
     component: VerifyEmailComponent,
-    canActivate: [AngularFireAuthGuard],
+    canActivate: [AngularFireAuthGuard, VerifiedEmailGuard],
   },
   {
     path: '',
