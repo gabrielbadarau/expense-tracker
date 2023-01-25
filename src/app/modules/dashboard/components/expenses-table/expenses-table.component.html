@@ -21,7 +21,7 @@
     <!-- Description Column -->
     <ng-container matColumnDef="description">
       <th class="sm:table-cell hidden" mat-header-cell *matHeaderCellDef>Description</th>
-      <td class="sm:table-cell hidden" mat-cell *matCellDef="let row">{{ row.description ?? '-' }}</td>
+      <td class="sm:table-cell hidden" mat-cell *matCellDef="let row">{{ row.description ? row.description : '-' }}</td>
     </ng-container>
 
     <!-- Expand Action Column -->

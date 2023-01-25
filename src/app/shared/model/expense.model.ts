@@ -1,8 +1,8 @@
 import { ExpenseCategory } from './expense-category.model';
 
 export interface Expense {
-  date: Date;
+  date: string;
   category: ExpenseCategory;
   amount: number;
-  description: string;
+  description: string | null;
 }

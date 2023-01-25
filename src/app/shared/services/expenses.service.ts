@@ -4,7 +4,6 @@ import { Injectable } from '@angular/core';
 import { defer, Observable } from 'rxjs';
 
 import { Expense } from '../../shared/model/expense.model';
-import { identifierName } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +11,12 @@ import { identifierName } from '@angular/compiler';
 export class ExpensesService {
   constructor(private afs: AngularFirestore) {}
 
-  getUserDb(uid: string): AngularFirestoreCollection<Expense> {
-    return this.afs.collection(`/${uid}`);
+  getExpenses(uid: string) {
+    return this.afs.collection('/users').doc(`${uid}`).collection('expenses').valueChanges() as Observable<Expense[]>;
+  }
+
+  getExpenseById(uid: string, idExpense: string) {
+    return defer(() => this.afs.collection('/users').doc(`${uid}`).collection('expenses').doc(`${idExpense}`).get());
   }
 
   createExpense(uid: string, expense: Expense) {
@@ -24,10 +27,6 @@ export class ExpensesService {
     return defer(() =>
       this.afs.collection('/users').doc(`${uid}`).collection('expenses').doc(`${idExpense}`).update(expense)
     );
-  }
-
-  getExpenseById(uid: string, idExpense: string) {
-    return defer(() => this.afs.collection('/users').doc(`${uid}`).collection('expenses').doc(`${idExpense}`).get());
   }
 
   // delete(id: string): Promise<void> {

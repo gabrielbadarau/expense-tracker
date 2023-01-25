@@ -36,6 +36,7 @@
     <input matInput type="number" formControlName="amount" autocomplete="off" />
     <mat-icon matSuffix class="text-base font-medium">RON</mat-icon>
     <mat-error *ngIf="form.get('amount')?.hasError('required')">Amount is required</mat-error>
+    <mat-error *ngIf="form.get('amount')?.hasError('min')">Is it even worth it to track it?</mat-error>
     <mat-error *ngIf="form.get('amount')?.hasError('max')">That's a bit too much. Don't you think?</mat-error>
   </mat-form-field>
 

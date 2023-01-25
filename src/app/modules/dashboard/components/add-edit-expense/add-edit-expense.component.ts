@@ -93,7 +93,8 @@ export class AddEditExpense implements OnInit {
   edit(): void {
     if (this.form.valid) {
       // changing date format
-      this.form.value.date = typeof this.form.value.date !== 'string' ? this.form.value.date.toISOString() : null;
+      this.form.value.date =
+        typeof this.form.value.date !== 'string' ? this.form.value.date.toISOString() : this.form.value.date;
 
       this.isLoading = true;
 
@@ -124,7 +125,7 @@ export class AddEditExpense implements OnInit {
     return this.formBuilder.group({
       date: [{ disabled: true }],
       category: ['', [Validators.required]],
-      amount: ['', [Validators.required, Validators.max(1000000)]],
+      amount: ['', [Validators.required, Validators.min(0.1), Validators.max(1000000)]],
       description: [''],
     });
   }

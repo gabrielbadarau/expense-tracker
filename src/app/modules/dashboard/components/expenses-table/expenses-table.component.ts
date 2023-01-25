@@ -1,14 +1,12 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import {
-  columnsExpenseTable,
-  mockTableData,
-  TableExpenseData,
-} from '../../../../shared/model/table-expense-data.model';
+import { Expense } from '../../../../shared/model/expense.model';
+import { columnsExpenseTable } from '../../../../shared/model/table-expense-data.model';
+
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { orderTableDetailExpandTrigger } from './expense-table.animations';
 
@@ -19,22 +17,24 @@ import { orderTableDetailExpandTrigger } from './expense-table.animations';
   animations: [orderTableDetailExpandTrigger],
 })
 export class ExpensesTableComponent implements AfterViewInit {
+  @Input() expenses: Expense[] = [];
+
   displayedColumns = columnsExpenseTable;
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
-  expenses: MatTableDataSource<TableExpenseData>;
-  expandedElement: TableExpenseData | null = null;
+  data: MatTableDataSource<Expense>;
+  expandedElement: Expense | null = null;
 
   @ViewChild('table', { read: ElementRef }) tableExpense!: ElementRef;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private dialog: MatDialog) {
-    this.expenses = new MatTableDataSource(mockTableData);
+    this.data = new MatTableDataSource(this.expenses);
   }
 
   ngAfterViewInit(): void {
-    this.expenses.paginator = this.paginator;
-    this.expenses.sort = this.sort;
+    this.data.paginator = this.paginator;
+    this.data.sort = this.sort;
   }
 
   scrollTop(): void {

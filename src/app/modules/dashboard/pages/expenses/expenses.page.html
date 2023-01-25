@@ -27,13 +27,13 @@
         (sortChanged)="handleSortChanged($event)"
         (orderStatusChanged)="updateOrderStatus($event)"
       >
-      </app-expenses-table>
+      </app-expenses-table><mat-spinner></mat-spinner>
     </div>
   </ng-container> -->
 
-    <ng-container>
+    <ng-container *ngIf="expenses$ | async as expenses">
       <div class="overflow-scroll rounded-lg" style="height: calc(100vh - 215px)">
-        <app-expenses-table> </app-expenses-table>
+        <app-expenses-table [expenses]="expenses"> </app-expenses-table>
       </div>
     </ng-container>
   </div>
