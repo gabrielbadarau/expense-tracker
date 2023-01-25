@@ -15,7 +15,7 @@ import { AuthService } from '../../../shared/services/auth.service';
 })
 export class LayoutComponent implements OnInit {
   isOpen = false;
-  userName!: string | null | undefined;
+  userName: string | null | undefined;
 
   constructor(private router: Router, private authService: AuthService, private snackBarService: SnackBarService) {}
 

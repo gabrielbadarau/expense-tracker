@@ -14,7 +14,7 @@ export class SnackBarService {
       horizontalPosition: 'end',
       verticalPosition: 'top',
       data: message,
-      duration: 4000,
+      duration: 7000,
       panelClass: ['success-snackbar'],
     });
   }
@@ -24,7 +24,7 @@ export class SnackBarService {
       horizontalPosition: 'end',
       verticalPosition: 'top',
       data: message,
-      duration: 4000,
+      duration: 7000,
       panelClass: ['error-snackbar'],
     });
   }

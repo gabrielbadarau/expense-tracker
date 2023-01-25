@@ -1,7 +1,7 @@
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Injectable } from '@angular/core';
 
-import { defer, from } from 'rxjs';
+import { defer, tap } from 'rxjs';
 
 import { LoginData } from '../model/login-data.model';
 
@@ -9,7 +9,9 @@ import { LoginData } from '../model/login-data.model';
   providedIn: 'root',
 })
 export class AuthService {
-  getUser$ = this.auth.user;
+  uid = '';
+
+  getUser$ = this.auth.user.pipe(tap((user) => (this.uid = user?.uid as string)));
 
   constructor(private auth: AngularFireAuth) {}
 
