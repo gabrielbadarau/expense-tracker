@@ -1,5 +1,7 @@
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Injectable } from '@angular/core';
+
+import { v4 as uuidv4 } from 'uuid';
 
 import { defer, Observable } from 'rxjs';
 
@@ -20,13 +22,26 @@ export class ExpensesService {
   }
 
   createExpense(uid: string, expense: Expense) {
-    return defer(() => this.afs.collection('/users').doc(`${uid}`).collection('expenses').add(expense));
+    const id = uuidv4();
+
+    return defer(() =>
+      this.afs
+        .collection('/users')
+        .doc(`${uid}`)
+        .collection('expenses')
+        .doc(id)
+        .set({ ...expense, id })
+    );
   }
 
   editExpense(uid: string, idExpense: string, expense: Expense) {
     return defer(() =>
       this.afs.collection('/users').doc(`${uid}`).collection('expenses').doc(`${idExpense}`).update(expense)
     );
+  }
+
+  deleteExpense(uid: string, idExpense: string) {
+    return defer(() => this.afs.collection('/users').doc(`${uid}`).collection('expenses').doc(`${idExpense}`).delete());
   }
 
   // delete(id: string): Promise<void> {

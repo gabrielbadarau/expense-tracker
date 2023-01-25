@@ -56,10 +56,20 @@
               </p>
               <p class="font-bold">You paid {{ element.amount }} RON</p>
               <div class="text-center mt-2 leading-none flex justify-center py-4">
-                <button mat-flat-button color="warn" class="hover:brightness-95 !w-24 !h-10 mr-5" (click)="onDelete()">
+                <button
+                  mat-flat-button
+                  color="warn"
+                  class="hover:brightness-95 !w-24 !h-10 mr-5"
+                  (click)="onDelete(element)"
+                >
                   <span class="text-white leading-none font-medium text-base">Delete</span>
                 </button>
-                <button mat-flat-button color="primary" class="hover:brightness-95 !w-24 !h-10">
+                <button
+                  mat-flat-button
+                  color="primary"
+                  class="hover:brightness-95 !w-24 !h-10"
+                  (click)="onEdit(element)"
+                >
                   <span class="text-white leading-none font-medium text-base">Edit</span>
                 </button>
               </div>

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 import { catchError, finalize, of, tap } from 'rxjs';
+import { omit } from 'lodash';
 
 import { FormMode } from '../../../../shared/model/form-mode.model';
 import { Expense } from '../../../../shared/model/expense.model';
@@ -51,7 +52,7 @@ export class AddEditExpense implements OnInit {
       this.expensesService
         .getExpenseById(this.authService.uid, this.id)
         .pipe(
-          tap((expense) => this.form.setValue(expense.data() as Expense)),
+          tap((expense) => this.form.setValue(omit(expense.data(), ['id']) as Expense)),
           finalize(() => (this.isLoading = false)),
           catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
         )

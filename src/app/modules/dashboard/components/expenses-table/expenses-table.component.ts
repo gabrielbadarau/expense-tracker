@@ -3,9 +3,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 import { Expense } from '../../../../shared/model/expense.model';
 import { columnsExpenseTable } from '../../../../shared/model/table-expense-data.model';
+
+import { AuthService } from '../../../../shared/services/auth.service';
+import { ExpensesService } from '../../../../shared/services/expenses.service';
 
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { orderTableDetailExpandTrigger } from './expense-table.animations';
@@ -28,7 +32,12 @@ export class ExpensesTableComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dialog: MatDialog) {
+  constructor(
+    private dialog: MatDialog,
+    private router: Router,
+    private expensesService: ExpensesService,
+    private authService: AuthService
+  ) {
     this.data = new MatTableDataSource(this.expenses);
   }
 
@@ -41,7 +50,7 @@ export class ExpensesTableComponent implements AfterViewInit {
     setTimeout(() => this.tableExpense.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   }
 
-  onDelete(): void {
+  onDelete(element: Expense): void {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '20rem',
       height: '15rem',
@@ -50,7 +59,15 @@ export class ExpensesTableComponent implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
+      if (result && element.id) {
+        this.expensesService
+          .deleteExpense(this.authService.uid, element.id)
+          .subscribe({ complete: () => console.log('complete') });
+      }
     });
+  }
+
+  onEdit(element: Expense): void {
+    this.router.navigate([`dashboard/edit-expense/${element.id}`]);
   }
 }
