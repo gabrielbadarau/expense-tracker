@@ -15,21 +15,12 @@ import { AuthService } from '../../../shared/services/auth.service';
 })
 export class LayoutComponent implements OnInit {
   isOpen = false;
-  userName: string | null | undefined;
+  userName = '';
 
   constructor(private router: Router, private authService: AuthService, private snackBarService: SnackBarService) {}
 
   ngOnInit(): void {
-    this.authService.getUser$
-      .pipe(
-        untilDestroyed(this),
-        tap((user) => (this.userName = user?.displayName)),
-        catchError((error) => {
-          this.router.navigate(['/login']);
-          return of(this.snackBarService.openServiceErrorSnackBar(error.message));
-        })
-      )
-      .subscribe();
+    this.userName = this.authService.displayName;
   }
 
   logout(): void {
