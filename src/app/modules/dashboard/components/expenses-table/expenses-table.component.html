@@ -1,5 +1,5 @@
 <div #table class="w-full rounded shadow flex flex-col flex-nowrap">
-  <table mat-table [dataSource]="expenses" matSort multiTemplateDataRows matSortDisableClear="true">
+  <table mat-table [dataSource]="data" matSort multiTemplateDataRows matSortDisableClear="true">
     <!-- Date Column -->
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
@@ -15,7 +15,7 @@
     <!-- Amount Column -->
     <ng-container matColumnDef="amount">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
-      <td mat-cell *matCellDef="let row">{{ row.amount | currency : 'RON' }}</td>
+      <td mat-cell *matCellDef="let row">{{ row.amount | number : '1.2' }} RON</td>
     </ng-container>
 
     <!-- Description Column -->
@@ -54,7 +54,7 @@
               <p class="leading-relaxed mb-3">
                 {{ element.description ? element.description : 'No description added to this expense.' }}
               </p>
-              <p class="font-bold">You paid {{ element.amount }} RON</p>
+              <p class="font-bold">You paid {{ element.amount | number : '1.2' }} RON</p>
               <div class="text-center mt-2 leading-none flex justify-center py-4">
                 <button
                   mat-flat-button

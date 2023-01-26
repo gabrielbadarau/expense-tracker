@@ -43,8 +43,4 @@ export class ExpensesService {
   deleteExpense(uid: string, idExpense: string) {
     return defer(() => this.afs.collection('/users').doc(`${uid}`).collection('expenses').doc(`${idExpense}`).delete());
   }
-
-  // delete(id: string): Promise<void> {
-  //   return this.tutorialsRef.doc(id).delete();
-  // }
 }
