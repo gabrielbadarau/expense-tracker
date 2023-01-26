@@ -1,15 +1,16 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 
-import { finalize } from 'rxjs';
+import { catchError, finalize, of } from 'rxjs';
 
 import { Expense } from '../../../../shared/model/expense.model';
 import { columnsExpenseTable } from '../../../../shared/model/table-expense-data.model';
 
+import { SnackBarService } from '../../../../shared/services/snackbar.service';
 import { AuthService } from '../../../../shared/services/auth.service';
 import { ExpensesService } from '../../../../shared/services/expenses.service';
 
@@ -22,8 +23,14 @@ import { orderTableDetailExpandTrigger } from './expense-table.animations';
   styleUrls: ['./expenses-table.component.scss'],
   animations: [orderTableDetailExpandTrigger],
 })
-export class ExpensesTableComponent implements OnInit, AfterViewInit {
-  @Input() expenses: Expense[] = [];
+export class ExpensesTableComponent implements AfterViewInit {
+  @Input() set expenses(value: Expense[]) {
+    this.data = new MatTableDataSource(value);
+  }
+
+  get expenses(): Expense[] {
+    return this._expenses;
+  }
 
   isLoading = false;
   displayedColumns = columnsExpenseTable;
@@ -39,12 +46,11 @@ export class ExpensesTableComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog,
     private router: Router,
     private expensesService: ExpensesService,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackBarService: SnackBarService
   ) {}
 
-  ngOnInit(): void {
-    this.data = new MatTableDataSource(this.expenses);
-  }
+  private _expenses: Expense[] = [];
 
   ngAfterViewInit(): void {
     this.data.paginator = this.paginator;
@@ -69,7 +75,13 @@ export class ExpensesTableComponent implements OnInit, AfterViewInit {
 
         this.expensesService
           .deleteExpense(this.authService.uid, element.id)
-          .pipe(finalize(() => (this.isLoading = false)))
+          .pipe(
+            finalize(() => {
+              this.isLoading = false;
+              this.snackBarService.openSuccessSnackBar('Successfully deleted.');
+            }),
+            catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
+          )
           .subscribe();
       }
     });

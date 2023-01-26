@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { defer, Observable } from 'rxjs';
 
 import { Expense } from '../../shared/model/expense.model';
+import { ExpenseCategory } from '../model/expense-category.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +14,16 @@ import { Expense } from '../../shared/model/expense.model';
 export class ExpensesService {
   constructor(private afs: AngularFirestore) {}
 
-  getExpenses(uid: string) {
-    return this.afs.collection('/users').doc(`${uid}`).collection('expenses').valueChanges() as Observable<Expense[]>;
+  getFilteredExpenses(uid: string, filter: ExpenseCategory | null) {
+    if (filter) {
+      return this.afs
+        .collection('/users')
+        .doc(`${uid}`)
+        .collection('expenses', (ref) => ref.where('category', '==', filter))
+        .valueChanges() as Observable<Expense[]>;
+    } else {
+      return this.afs.collection('/users').doc(`${uid}`).collection('expenses').valueChanges() as Observable<Expense[]>;
+    }
   }
 
   getExpenseById(uid: string, idExpense: string) {
