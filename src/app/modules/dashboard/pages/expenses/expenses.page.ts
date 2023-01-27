@@ -1,9 +1,9 @@
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 
 import { Expense } from '../../../../shared/model/expense.model';
 import { ExpenseCategory } from '../../../../shared/model/expense-category.model';
@@ -17,8 +17,9 @@ import { SnackBarService } from '../../../../shared/services/snackbar.service';
   templateUrl: './expenses.page.html',
   styleUrls: ['./expenses.page.scss'],
 })
-export class ExpensesPage implements OnInit {
+export class ExpensesPage {
   selectedIndex = 0;
+  filter!: ExpenseCategory | null;
   isLoading = false;
   categories = Object.values(ExpenseCategory);
 
@@ -31,30 +32,40 @@ export class ExpensesPage implements OnInit {
     private authService: AuthService,
     private snackBarService: SnackBarService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private changeDetector: ChangeDetectorRef
   ) {
     this.isSmallScreen$ = breakpointObserver.observe([Breakpoints.XSmall]).pipe(
       map((xs) => {
         return xs.matches;
       })
     );
-  }
 
-  filter!: ExpenseCategory | null;
+    this.expenses$ = this.route.queryParamMap.pipe(
+      tap((queryParamMap) => {
+        // filter param changes
+        this.filter = queryParamMap.get('category') as ExpenseCategory;
 
-  ngOnInit(): void {
-    this.filter = this.route.snapshot.queryParamMap.get('category') as ExpenseCategory;
-
-    this.setActiveTab();
-    this.getExpenses();
+        // show active Angular Material Tab based on filter
+        this.setActiveTab();
+        this.changeDetector.detectChanges();
+      }),
+      switchMap(() =>
+        this.expensesService.getFilteredExpenses(this.authService.uid, this.filter).pipe(
+          catchError((error) => {
+            this.snackBarService.openServiceErrorSnackBar(error.message);
+            return of([]);
+          })
+        )
+      )
+    );
   }
 
   onTabChange(e: MatTabChangeEvent) {
     this.filter = e.tab.textLabel as ExpenseCategory;
 
-    this.changeQueryParamaters(e.tab.textLabel);
     this.setActiveTab();
-    this.getExpenses();
+    this.changeQueryParamaters(e.tab.textLabel);
   }
 
   changeQueryParamaters(textLabel: string) {
@@ -68,14 +79,5 @@ export class ExpensesPage implements OnInit {
   setActiveTab() {
     const categoryArray = Object.values(ExpenseCategory);
     this.selectedIndex = this.filter ? categoryArray.indexOf(this.filter) + 1 : 0;
-  }
-
-  getExpenses(): void {
-    this.expenses$ = this.expensesService.getFilteredExpenses(this.authService.uid, this.filter).pipe(
-      catchError((error) => {
-        this.snackBarService.openServiceErrorSnackBar(error.message);
-        return of([]);
-      })
-    );
   }
 }

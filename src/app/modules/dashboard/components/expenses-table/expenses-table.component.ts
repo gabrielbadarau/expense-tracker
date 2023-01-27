@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 
 import { catchError, finalize, of } from 'rxjs';
@@ -24,19 +24,17 @@ import { orderTableDetailExpandTrigger } from './expense-table.animations';
   animations: [orderTableDetailExpandTrigger],
 })
 export class ExpensesTableComponent implements AfterViewInit {
-  @Input() set expenses(value: Expense[]) {
-    this.data = new MatTableDataSource(value);
-  }
-
-  get expenses(): Expense[] {
-    return this._expenses;
-  }
-
   isLoading = false;
   displayedColumns = columnsExpenseTable;
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   data!: MatTableDataSource<Expense>;
   expandedElement: Expense | null = null;
+
+  @Input() set expenses(value: Expense[]) {
+    this.data = new MatTableDataSource(value);
+
+    this.ngAfterViewInit();
+  }
 
   @ViewChild('table', { read: ElementRef }) tableExpense!: ElementRef;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -49,8 +47,6 @@ export class ExpensesTableComponent implements AfterViewInit {
     private authService: AuthService,
     private snackBarService: SnackBarService
   ) {}
-
-  private _expenses: Expense[] = [];
 
   ngAfterViewInit(): void {
     this.data.paginator = this.paginator;
