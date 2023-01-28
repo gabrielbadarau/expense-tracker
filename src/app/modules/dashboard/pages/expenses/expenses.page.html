@@ -21,7 +21,7 @@
 
     <ng-container *ngIf="expenses$ | async as expenses">
       <div class="overflow-scroll rounded-lg" style="height: calc(100vh - 215px)">
-        <app-expenses-table [expenses]="expenses"> </app-expenses-table>
+        <app-expenses-table [expenses]="expenses" [sortData]="sortData"> </app-expenses-table>
       </div>
     </ng-container>
   </div>

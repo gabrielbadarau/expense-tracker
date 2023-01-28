@@ -2,6 +2,8 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PageEvent } from '@angular/material/paginator';
+import { Sort, SortDirection } from '@angular/material/sort';
 
 import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 
@@ -20,6 +22,8 @@ import { SnackBarService } from '../../../../shared/services/snackbar.service';
 export class ExpensesPage {
   selectedIndex = 0;
   filter!: ExpenseCategory | null;
+  sortData!: Sort;
+  pageData!: Partial<PageEvent>;
   isLoading = false;
   categories = Object.values(ExpenseCategory);
 
@@ -43,15 +47,25 @@ export class ExpensesPage {
 
     this.expenses$ = this.route.queryParamMap.pipe(
       tap((queryParamMap) => {
-        // filter param changes
+        //listen to filter param changes
         this.filter = queryParamMap.get('category') as ExpenseCategory;
+
+        //listen to sort data param changes
+        const active = queryParamMap.get('active') ?? 'date';
+        const direction = (queryParamMap.get('direction') ?? 'desc') as SortDirection;
+        this.sortData = { active, direction };
+
+        //listen to page data param changes
+        const pageIndex = +(queryParamMap.get('pageIndex') ?? 0);
+        const pageSize = +(queryParamMap.get('pageSize') ?? 0);
+        this.pageData = { pageIndex, pageSize };
 
         // show active Angular Material Tab based on filter
         this.setActiveTab();
         this.changeDetector.detectChanges();
       }),
       switchMap(() =>
-        this.expensesService.getFilteredExpenses(this.authService.uid, this.filter).pipe(
+        this.expensesService.getFilteredExpenses(this.authService.uid, this.filter, this.sortData, this.pageData).pipe(
           catchError((error) => {
             this.snackBarService.openServiceErrorSnackBar(error.message);
             return of([]);
@@ -69,11 +83,7 @@ export class ExpensesPage {
   }
 
   changeQueryParamaters(textLabel: string) {
-    if (textLabel) {
-      this.router.navigate(['dashboard'], { queryParams: { category: `${textLabel}` } });
-    } else {
-      this.router.navigate(['dashboard']);
-    }
+    this.router.navigate(['dashboard'], { queryParams: { category: `${textLabel}` }, queryParamsHandling: 'merge' });
   }
 
   setActiveTab() {

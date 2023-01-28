@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 
 import { catchError, finalize, of } from 'rxjs';
+import { omit } from 'lodash';
 
 import { Expense } from '../../../../shared/model/expense.model';
 import { columnsExpenseTable } from '../../../../shared/model/table-expense-data.model';
@@ -23,18 +24,14 @@ import { orderTableDetailExpandTrigger } from './expense-table.animations';
   styleUrls: ['./expenses-table.component.scss'],
   animations: [orderTableDetailExpandTrigger],
 })
-export class ExpensesTableComponent implements AfterViewInit {
+export class ExpensesTableComponent {
   isLoading = false;
   displayedColumns = columnsExpenseTable;
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
-  data!: MatTableDataSource<Expense>;
   expandedElement: Expense | null = null;
 
-  @Input() set expenses(value: Expense[]) {
-    this.data = new MatTableDataSource(value);
-
-    this.ngAfterViewInit();
-  }
+  @Input() expenses!: Expense[];
+  @Input() sortData!: Sort;
 
   @ViewChild('table', { read: ElementRef }) tableExpense!: ElementRef;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -48,9 +45,16 @@ export class ExpensesTableComponent implements AfterViewInit {
     private snackBarService: SnackBarService
   ) {}
 
-  ngAfterViewInit(): void {
-    this.data.paginator = this.paginator;
-    this.data.sort = this.sort;
+  onPageChange(event: PageEvent) {
+    const pageData = omit(event, ['previousPageIndex', 'length']);
+
+    // this.router.navigate(['dashboard'], { queryParams: pageData });
+
+    this.scrollTop();
+  }
+
+  onSortChange(event: Sort) {
+    this.router.navigate(['dashboard'], { queryParams: event, queryParamsHandling: 'merge' });
   }
 
   scrollTop(): void {
