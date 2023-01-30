@@ -1,6 +1,5 @@
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Injectable } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 
 import { v4 as uuidv4 } from 'uuid';
@@ -18,7 +17,7 @@ export class ExpensesService {
 
   constructor(private afs: AngularFirestore) {}
 
-  getFilteredExpenses(uid: string, filter: ExpenseCategory | null, sortData: Sort, pageData: Partial<PageEvent>) {
+  getFilteredExpenses(uid: string, filter: ExpenseCategory | '', sortData: Sort) {
     if (filter) {
       return this.userCollection
         .doc(`${uid}`)
@@ -32,9 +31,7 @@ export class ExpensesService {
       return this.userCollection
         .doc(`${uid}`)
         .collection('expenses', (ref) =>
-          ref
-            .where(sortData.active, '!=', null)
-            .orderBy(sortData.active, sortData.direction as firebase.default.firestore.OrderByDirection | undefined)
+          ref.orderBy(sortData.active, sortData.direction as firebase.default.firestore.OrderByDirection | undefined)
         )
         .valueChanges() as Observable<Expense[]>;
     }

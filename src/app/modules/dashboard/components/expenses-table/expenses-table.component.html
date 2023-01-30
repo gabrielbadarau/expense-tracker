@@ -1,7 +1,7 @@
 <div #table class="w-full rounded shadow flex flex-col flex-nowrap">
   <table
     mat-table
-    [dataSource]="expenses"
+    [dataSource]="data"
     [matSortActive]="sortData.active"
     [matSortDirection]="sortData.direction"
     (matSortChange)="onSortChange($event)"
@@ -110,7 +110,7 @@
   <mat-paginator
     class="mt-5 pb-2 rounded-lg"
     [showFirstLastButtons]="true"
-    [pageSizeOptions]="[5, 10, 20]"
-    (page)="onPageChange($event)"
+    [pageSizeOptions]="[10, 20, 50]"
+    (page)="onPageChange()"
   ></mat-paginator>
 </div>
