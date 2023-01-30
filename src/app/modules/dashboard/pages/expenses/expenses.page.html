@@ -21,7 +21,12 @@
 
     <ng-container *ngIf="expenses$ | async as expenses">
       <div class="overflow-scroll rounded-lg" style="height: calc(100vh - 215px)">
-        <app-expenses-table [expenses]="expenses" [sortData]="sortData"> </app-expenses-table>
+        <ng-container *ngIf="!isLoading; else spinner">
+          <app-expenses-table [expenses]="expenses" [sortData]="sortData"> </app-expenses-table>
+        </ng-container>
+        <ng-template #spinner>
+          <mat-spinner class="mx-auto mt-14" strokeWidth="8" diameter="100"></mat-spinner>
+        </ng-template>
       </div>
     </ng-container>
   </div>

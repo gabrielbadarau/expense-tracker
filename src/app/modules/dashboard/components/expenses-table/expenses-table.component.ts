@@ -25,7 +25,6 @@ import { orderTableDetailExpandTrigger } from './expense-table.animations';
 })
 export class ExpensesTableComponent implements AfterViewInit {
   data!: MatTableDataSource<Expense>;
-  isLoading = false;
   displayedColumns = columnsExpenseTable;
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   expandedElement: Expense | null = null;
@@ -73,15 +72,10 @@ export class ExpensesTableComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result && element.id) {
-        this.isLoading = true;
-
         this.expensesService
           .deleteExpense(this.authService.uid, element.id)
           .pipe(
-            finalize(() => {
-              this.isLoading = false;
-              this.snackBarService.openSuccessSnackBar('Successfully deleted.');
-            }),
+            finalize(() => this.snackBarService.openSuccessSnackBar('Successfully deleted.')),
             catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
           )
           .subscribe();

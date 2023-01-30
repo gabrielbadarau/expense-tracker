@@ -53,19 +53,22 @@ export class ExpensesPage {
         const direction = (queryParamMap.get('direction') ?? 'desc') as SortDirection;
         this.sortData = { active, direction };
 
-
         // show active Angular Material Tab based on filter
         this.setActiveTab();
         this.changeDetector.detectChanges();
       }),
-      switchMap(() =>
-        this.expensesService.getFilteredExpenses(this.authService.uid, this.filter, this.sortData).pipe(
+      switchMap(() => {
+        this.isLoading = true;
+
+        return this.expensesService.getFilteredExpenses(this.authService.uid, this.filter, this.sortData).pipe(
+          tap(() => (this.isLoading = false)),
           catchError((error) => {
             this.snackBarService.openServiceErrorSnackBar(error.message);
+            this.isLoading = false;
             return of([]);
           })
-        )
-      )
+        );
+      })
     );
   }
 
