@@ -1,12 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgControlStatus, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { tap } from 'rxjs';
-import { FormMode } from 'src/app/shared/model/form-mode.model';
+
+import { catchError, finalize, of, tap } from 'rxjs';
+import { omit } from 'lodash';
+
+import { FormMode } from '../../../../shared/model/form-mode.model';
+import { Expense } from '../../../../shared/model/expense.model';
+import { ExpenseCategory } from '../../../../shared/model/expense-category.model';
 
 import { SnackBarService } from '../../../../shared/services/snackbar.service';
-import { ExpenseCategory } from '../../../../shared/model/expense-category.model';
+import { ExpensesService } from '../../../../shared/services/expenses.service';
+import { AuthService } from '../../../../shared/services/auth.service';
 
 @UntilDestroy()
 @Component({
@@ -24,18 +30,34 @@ export class AddEditExpense implements OnInit {
 
   formModes = FormMode;
   hidePassword = true;
+  isLoading = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private snackBarService: SnackBarService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private expensesService: ExpensesService,
+    private authService: AuthService
   ) {
     this.form = this.initForm();
   }
 
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
+
+    if (this.id) {
+      this.isLoading = true;
+
+      this.expensesService
+        .getExpenseById(this.authService.uid, this.id)
+        .pipe(
+          tap((expense) => this.form.setValue(omit(expense.data(), ['id']) as Expense)),
+          finalize(() => (this.isLoading = false)),
+          catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
+        )
+        .subscribe();
+    }
 
     this.activatedRoute.data
       .pipe(
@@ -47,8 +69,22 @@ export class AddEditExpense implements OnInit {
 
   create(): void {
     if (this.form.valid) {
+      // changing date format
       this.form.value.date = this.form.value.date.toISOString();
-      console.log(this.form.value);
+
+      this.isLoading = true;
+
+      this.expensesService
+        .createExpense(this.authService.uid, this.form.value)
+        .pipe(
+          tap(() => {
+            this.form.reset();
+            of(this.snackBarService.openSuccessSnackBar('Successfully created.'));
+          }),
+          finalize(() => (this.isLoading = false)),
+          catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
+        )
+        .subscribe();
     } else {
       this.form.markAllAsTouched();
       this.snackBarService.openErrorSnackBar('Check your form errors.');
@@ -57,7 +93,24 @@ export class AddEditExpense implements OnInit {
 
   edit(): void {
     if (this.form.valid) {
-      console.log(this.form.value);
+      // changing date format
+      this.form.value.date =
+        typeof this.form.value.date !== 'string' ? this.form.value.date.toISOString() : this.form.value.date;
+
+      this.isLoading = true;
+
+      this.expensesService
+        .editExpense(this.authService.uid, this.id as string, this.form.value)
+        .pipe(
+          tap(() => {
+            this.form.reset();
+            of(this.snackBarService.openSuccessSnackBar('Successfully updated.'));
+            this.router.navigate(['dashboard']);
+          }),
+          finalize(() => (this.isLoading = false)),
+          catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
+        )
+        .subscribe();
     } else {
       this.form.markAllAsTouched();
       this.snackBarService.openErrorSnackBar('Check your form errors.');
@@ -73,7 +126,7 @@ export class AddEditExpense implements OnInit {
     return this.formBuilder.group({
       date: [{ disabled: true }],
       category: ['', [Validators.required]],
-      amount: ['', [Validators.required, Validators.max(1000000)]],
+      amount: ['', [Validators.required, Validators.min(0.1), Validators.max(1000000)]],
       description: [''],
     });
   }

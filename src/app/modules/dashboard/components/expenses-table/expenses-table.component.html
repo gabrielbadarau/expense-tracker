@@ -1,5 +1,15 @@
 <div #table class="w-full rounded shadow flex flex-col flex-nowrap">
-  <table mat-table [dataSource]="expenses" matSort multiTemplateDataRows matSortDisableClear="true">
+  <table
+    mat-table
+    [dataSource]="data"
+    [matSortActive]="sortData.active"
+    [matSortDirection]="sortData.direction"
+    (matSortChange)="onSortChange($event)"
+    matSort
+    matSortStart="desc"
+    multiTemplateDataRows
+    matSortDisableClear="true"
+  >
     <!-- Date Column -->
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
@@ -15,13 +25,13 @@
     <!-- Amount Column -->
     <ng-container matColumnDef="amount">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
-      <td mat-cell *matCellDef="let row">{{ row.amount | currency : 'RON' }}</td>
+      <td mat-cell *matCellDef="let row">{{ row.amount | number : '1.2' }} RON</td>
     </ng-container>
 
     <!-- Description Column -->
     <ng-container matColumnDef="description">
       <th class="sm:table-cell hidden" mat-header-cell *matHeaderCellDef>Description</th>
-      <td class="sm:table-cell hidden" mat-cell *matCellDef="let row">{{ row.description ?? '-' }}</td>
+      <td class="sm:table-cell hidden" mat-cell *matCellDef="let row">{{ row.description ? row.description : '-' }}</td>
     </ng-container>
 
     <!-- Expand Action Column -->
@@ -54,12 +64,22 @@
               <p class="leading-relaxed mb-3">
                 {{ element.description ? element.description : 'No description added to this expense.' }}
               </p>
-              <p class="font-bold">You paid {{ element.amount }} RON</p>
+              <p class="font-bold">You paid {{ element.amount | number : '1.2' }} RON</p>
               <div class="text-center mt-2 leading-none flex justify-center py-4">
-                <button mat-flat-button color="warn" class="hover:brightness-95 !w-24 !h-10 mr-5" (click)="onDelete()">
+                <button
+                  mat-flat-button
+                  color="warn"
+                  class="hover:brightness-95 !w-24 !h-10 mr-5"
+                  (click)="onDelete(element)"
+                >
                   <span class="text-white leading-none font-medium text-base">Delete</span>
                 </button>
-                <button mat-flat-button color="primary" class="hover:brightness-95 !w-24 !h-10">
+                <button
+                  mat-flat-button
+                  color="primary"
+                  class="hover:brightness-95 !w-24 !h-10"
+                  (click)="onEdit(element)"
+                >
                   <span class="text-white leading-none font-medium text-base">Edit</span>
                 </button>
               </div>
@@ -90,7 +110,7 @@
   <mat-paginator
     class="mt-5 pb-2 rounded-lg"
     [showFirstLastButtons]="true"
-    [pageSizeOptions]="[5, 10, 25, 100]"
-    (page)="scrollTop()"
+    [pageSizeOptions]="[10, 20, 50]"
+    (page)="onPageChange()"
   ></mat-paginator>
 </div>

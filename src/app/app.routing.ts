@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AngularFireAuthGuard, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
+import { canActivate, redirectLoggedInTo } from '@angular/fire/compat/auth-guard';
 
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -15,20 +15,17 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectLoggedInUserToDashboard },
+    ...canActivate(redirectLoggedInUserToDashboard),
   },
   {
     path: 'register',
     component: RegisterComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectLoggedInUserToDashboard },
+    ...canActivate(redirectLoggedInUserToDashboard),
   },
   {
     path: 'reset-password',
     component: ResetPasswordComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectLoggedInUserToDashboard },
+    ...canActivate(redirectLoggedInUserToDashboard),
   },
   {
     path: 'dashboard',
