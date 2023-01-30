@@ -65,6 +65,7 @@ export class ExpensesPage {
           catchError((error) => {
             this.snackBarService.openServiceErrorSnackBar(error.message);
             this.isLoading = false;
+            console.error(error);
             return of([]);
           })
         );
