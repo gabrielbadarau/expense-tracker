@@ -14,6 +14,12 @@ export class ChartsPage {
     this.range = this.initForm();
   }
 
+  onCalendarClose(){
+    if(this.range.valid){
+      console.log('fuk yea')
+    }
+  }
+
   private initForm(): FormGroup {
     return this.formBuilder.group({
       start: [null, Validators.required],

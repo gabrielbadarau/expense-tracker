@@ -10,18 +10,20 @@ import { DomPortalModule } from '../../shared/components/dom-portal/dom-portal.m
 import { LayoutComponent } from './layout/layout.component';
 import { ExpensesTableComponent } from './components/expenses-table/expenses-table.component';
 import { AddEditExpense } from './components/add-edit-expense/add-edit-expense.component';
-import { ExpensesPage } from './pages/expenses/expenses.page';
+import { ChartComponent } from './components/chart/chart.component';
 import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
+import { ExpensesPage } from './pages/expenses/expenses.page';
 import { ChartsPage } from './pages/charts/charts.page';
 
 @NgModule({
   declarations: [
     LayoutComponent,
     ExpensesTableComponent,
+    ChartComponent,
+    DeleteDialogComponent,
     AddEditExpense,
     ExpensesPage,
     ChartsPage,
-    DeleteDialogComponent,
   ],
   imports: [CommonModule, DashboardRouting, DomPortalModule, MaterialModule, ReactiveFormsModule],
 })
