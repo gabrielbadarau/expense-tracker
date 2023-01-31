@@ -12,9 +12,17 @@ import { ExpensesTableComponent } from './components/expenses-table/expenses-tab
 import { AddEditExpense } from './components/add-edit-expense/add-edit-expense.component';
 import { ExpensesPage } from './pages/expenses/expenses.page';
 import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
+import { ChartsPage } from './pages/charts/charts.page';
 
 @NgModule({
-  declarations: [LayoutComponent, ExpensesTableComponent, AddEditExpense, ExpensesPage, DeleteDialogComponent],
+  declarations: [
+    LayoutComponent,
+    ExpensesTableComponent,
+    AddEditExpense,
+    ExpensesPage,
+    ChartsPage,
+    DeleteDialogComponent,
+  ],
   imports: [CommonModule, DashboardRouting, DomPortalModule, MaterialModule, ReactiveFormsModule],
 })
 export class DashboardModule {}

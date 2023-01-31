@@ -1,0 +1,42 @@
+<div class="h-full py-5">
+  <mat-form-field hideRequiredMarker="true" appearance="outline">
+    <mat-label class="text-lg font-medium">Enter a date range</mat-label>
+    <mat-date-range-input [max]="maxDateCalendar" [formGroup]="range" [rangePicker]="picker">
+      <input
+        #input
+        matStartDate
+        formControlName="start"
+        placeholder="Start date"
+        (focus)="picker.open()"
+        autocomplete="off"
+        readonly
+      />
+      <input
+        #input
+        matEndDate
+        formControlName="end"
+        placeholder="End date"
+        (focus)="picker.open()"
+        autocomplete="off"
+        readonly
+      />
+    </mat-date-range-input>
+
+    <mat-error *ngIf="range.get('start')?.hasError('required')">Please choose a start date. </mat-error>
+    <mat-error *ngIf="range.get('end')?.hasError('required')">Please choose an end date.</mat-error>
+
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker restoreFocus="true" #picker touchUi></mat-date-range-picker>
+  </mat-form-field>
+
+  <!-- <ng-container *ngIf="expenses$ | async as expenses">
+      <div class="overflow-scroll rounded-lg" style="height: calc(100vh - 215px)">
+        <ng-container *ngIf="!isLoading; else spinner">
+          <app-expenses-table [expenses]="expenses" [sortData]="sortData"> </app-expenses-table>
+        </ng-container>
+        <ng-template #spinner>
+          <mat-spinner class="mx-auto mt-14" strokeWidth="8" diameter="100"></mat-spinner>
+        </ng-template>
+      </div>
+    </ng-container> -->
+</div>
