@@ -1,4 +1,4 @@
-<div class="h-full py-5">
+<div class="h-full py-5 flex flex-col flex-nowrap justify-center content-center items-center">
   <mat-form-field hideRequiredMarker="true" appearance="outline">
     <mat-label class="text-lg font-medium">Enter a date range</mat-label>
     <mat-date-range-input [max]="maxDateCalendar" [formGroup]="range" [rangePicker]="picker">
@@ -28,6 +28,7 @@
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-date-range-picker (closed)="onCalendarClose()" restoreFocus="true" #picker touchUi></mat-date-range-picker>
   </mat-form-field>
-
-  <custom-chart></custom-chart>
+  <div class="chart-doughnut mt-7">
+    <custom-chart></custom-chart>
+  </div>
 </div>
