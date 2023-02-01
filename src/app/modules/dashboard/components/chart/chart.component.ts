@@ -4,48 +4,68 @@ import { Chart } from 'chart.js/auto';
 import { ExpenseCategory } from '../../../../shared/model/expense-category.model';
 
 var selectedIndex: number;
-var labelName: string;
 
-const imageURLs = [
-  'https://i.stack.imgur.com/2RAv2.png',
-  'https://i.stack.imgur.com/Tq5DA.png',
+const smallImageURLs = [
+  'assets/images/small/clothing.png',
+  'assets/images/small/clothing.png',
   'https://i.stack.imgur.com/3KRtW.png',
   'https://i.stack.imgur.com/iLyVi.png',
   'https://i.stack.imgur.com/2RAv2.png',
   'https://i.stack.imgur.com/Tq5DA.png',
-  'https://i.stack.imgur.com/3KRtW.png',
-  'https://i.stack.imgur.com/iLyVi.png',
-  'https://i.stack.imgur.com/2RAv2.png',
-  'https://i.stack.imgur.com/Tq5DA.png',
-  'https://i.stack.imgur.com/3KRtW.png',
-  'https://i.stack.imgur.com/iLyVi.png',
+  'assets/images/small/clothing.png',
+  'assets/images/small/clothing.png',
+  'assets/images/small/clothing.png',
+  'assets/images/small/clothing.png',
+  'assets/images/small/clothing.png',
+  'assets/images/small/clothing.png',
 ];
 
-const images = imageURLs.map((v) => {
-  var image = new Image();
-  image.src = v;
-  return image;
-});
-const customImagesOnArc = {
-  id: 'customImage',
+const bigImageURLs = [
+  'assets/images/big/clothing.png',
+  'assets/images/big/clothing.png',
+  'https://i.stack.imgur.com/3KRtW.png',
+  'https://i.stack.imgur.com/iLyVi.png',
+  'https://i.stack.imgur.com/2RAv2.png',
+  'https://i.stack.imgur.com/Tq5DA.png',
+  'assets/images/big/clothing.png',
+  'assets/images/big/clothing.png',
+  'assets/images/big/clothing.png',
+  'assets/images/big/clothing.png',
+  'assets/images/big/clothing.png',
+  'assets/images/big/clothing.png',
+];
+
+const customImagesToRenderPlugin = {
+  id: 'customImages',
   afterDatasetsDraw: (chart: any) => {
-    var ctx = chart.ctx;
+    let images: any = [];
+    let ctx = chart.ctx;
     ctx.save();
-    var xCenter = chart.canvas.width / 2;
-    var yCenter = chart.canvas.height / 2;
-    var data = chart.config.data.datasets[0].data;
-    var vTotal = data.reduce((a: any, b: any) => a + b, 0);
+
+    images = (chart.canvas.width <= 530 ? smallImageURLs : bigImageURLs).map((v) => {
+      let image = new Image();
+      image.src = v;
+      return image;
+    });
+
+    let xCenter = chart.canvas.width / 2;
+    let yCenter = chart.canvas.height / 2;
+    let data = chart.config.data.datasets[0].data;
+    let vTotal = data.reduce((a: any, b: any) => a + b, 0);
     data.forEach((v: any, i: any) => {
-      var vAngle = data.slice(0, i).reduce((a: any, b: any) => a + b, 0) + v / 2;
-      var angle = (360 / vTotal) * vAngle - 90;
-      var radians = angle * (Math.PI / 180);
-      var r = yCenter + yCenter / 2;
-      var x = xCenter + (Math.cos(radians) * r) / 2;
-      var y = yCenter + (Math.sin(radians) * r) / 2;
+      let vAngle = data.slice(0, i).reduce((a: any, b: any) => a + b, 0) + v / 2;
+      let angle = (360 / vTotal) * vAngle - 90;
+      let radians = angle * (Math.PI / 180);
+      let r = yCenter + yCenter / 2;
+      let x = xCenter + (Math.cos(radians) * r) / 2;
+      let y = yCenter + (Math.sin(radians) * r) / 2;
       ctx.translate(x, y);
-      var image = images[i];
-      ctx.drawImage(image, -image.width / 2, -image.height / 2);
-      ctx.translate(-x, -y);
+      let image = images[i];
+
+      if (vTotal - vAngle > 80) {
+        ctx.drawImage(image, -image.width / 2, -image.height / 2);
+        ctx.translate(-x, -y);
+      }
     });
     ctx.restore();
   },
@@ -65,6 +85,7 @@ const clickLabel = {
     if (selectedIndex !== undefined && selectedIndex !== -1) {
       const color = chart.data.datasets[0].backgroundColor[selectedIndex];
       const value = chart._metasets[0]._parsed[selectedIndex].toFixed(2);
+      const labelName = chart.data.labels[selectedIndex];
 
       ctx.save();
 
@@ -108,7 +129,9 @@ export class ChartComponent implements OnInit {
   chart: any;
   insideDoughnutText: any;
 
-  constructor() {}
+  constructor() {
+    Chart.register(customImagesToRenderPlugin);
+  }
 
   ngOnInit(): void {
     this.createChart();
@@ -135,11 +158,9 @@ export class ChartComponent implements OnInit {
       data: {
         datasets: [
           {
-            data: [900, 800, 700, 600, 500, 400, 300, 200, 100, 80, 70, 60],
+            data: [900, 800, 700, 600, 500, 400, 300, 200, 200, 200, 200, 170],
             backgroundColor: backgroundColors,
             hoverBackgroundColor: backgroundColors,
-            // hoverBorderColor: backgroundColors,
-            // hoverBorderWidth: 2,
           },
         ],
         labels: Object.values(ExpenseCategory),
@@ -148,15 +169,9 @@ export class ChartComponent implements OnInit {
         events: ['click'],
         responsive: true,
         cutout: '51%',
+
         onClick(event, element, chart) {
-          console.log(element[0]);
-          if (element[0]) {
-            labelName = chart.config.data.labels?.[element[0].index] as string;
-            selectedIndex = element[0].index;
-          } else {
-            labelName = '';
-            selectedIndex = -1;
-          }
+          selectedIndex = element[0] ? element[0].index : -1;
         },
         plugins: {
           tooltip: {
@@ -167,7 +182,7 @@ export class ChartComponent implements OnInit {
           },
         },
       },
-      plugins: [clickLabel, customImagesOnArc],
+      plugins: [clickLabel, customImagesToRenderPlugin],
     });
   }
 }
