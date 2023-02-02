@@ -15,47 +15,44 @@ export class ChartService {
 
   constructor(private afs: AngularFirestore) {}
 
-  getFilteredExpenses(uid: string, filter: ExpenseCategory | '', sortData: Sort) {
-    if (filter) {
-      return this.userCollection
-        .doc(`${uid}`)
-        .collection('expenses', (ref) =>
-          ref
-            .where('category', '==', filter)
-            .orderBy(sortData.active, sortData.direction as firebase.default.firestore.OrderByDirection | undefined)
-        )
-        .valueChanges() as Observable<Expense[]>;
-    } else {
-      return this.userCollection
-        .doc(`${uid}`)
-        .collection('expenses', (ref) =>
-          ref.orderBy(sortData.active, sortData.direction as firebase.default.firestore.OrderByDirection | undefined)
-        )
-        .valueChanges() as Observable<Expense[]>;
-    }
+  getExpensesRange(uid: string, start: string, end: string): Observable<Expense[]> {
+    return this.userCollection
+      .doc(`${uid}`)
+      .collection('expenses', (ref) => ref.where('date', '>=', start).where('date', '<=', end))
+      .valueChanges() as Observable<Expense[]>;
   }
 
-  getExpenseById(uid: string, idExpense: string) {
-    return defer(() => this.userCollection.doc(`${uid}`).collection('expenses').doc(`${idExpense}`).get());
+  initializeExpenseCategoryArray() {
+    return Object.values(ExpenseCategory).reduce((acc, curr) => {
+      const object: { [key: string]: number | string } = {};
+
+      object['category'] = curr;
+      object['number'] = 0;
+
+      acc.push(object);
+
+      return acc;
+    }, [] as { [key: string]: number | string }[]);
   }
 
-  createExpense(uid: string, expense: Expense) {
-    const id = uuidv4();
+  getExpenseCategoryArray(expenses: Expense[]) {
+    const expenseCategoryArray = this.initializeExpenseCategoryArray();
 
-    return defer(() =>
-      this.userCollection
-        .doc(`${uid}`)
-        .collection('expenses')
-        .doc(id)
-        .set({ ...expense, id })
-    );
-  }
+    expenses.forEach((expense) => {
+      const foundIndex = expenseCategoryArray.findIndex((item) => item['category'] === expense.category);
 
-  editExpense(uid: string, idExpense: string, expense: Expense) {
-    return defer(() => this.userCollection.doc(`${uid}`).collection('expenses').doc(`${idExpense}`).update(expense));
-  }
+      if (foundIndex) {
+        (expenseCategoryArray[foundIndex]['number'] as number)++;
+      }
+    });
 
-  deleteExpense(uid: string, idExpense: string) {
-    return defer(() => this.userCollection.doc(`${uid}`).collection('expenses').doc(`${idExpense}`).delete());
+    expenseCategoryArray.sort((a, b) => {
+      const x = a['number'] as number;
+      const y = b['number'] as number;
+
+      return y - x;
+    });
+
+    return expenseCategoryArray;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -13,6 +13,14 @@ import { customImagesToRenderPlugin } from '../../plugins/custom-images-to-rende
   styleUrls: ['./chart.component.scss'],
 })
 export class ChartComponent implements OnInit {
+  @Input() set sortedExpenses(
+    value: {
+      [key: string]: string | number;
+    }[]
+  ) {
+    console.log(value)
+  }
+
   chart: any;
 
   constructor() {}

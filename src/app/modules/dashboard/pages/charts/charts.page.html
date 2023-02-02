@@ -29,6 +29,6 @@
     <mat-date-range-picker (closed)="onCalendarClose()" restoreFocus="true" #picker touchUi></mat-date-range-picker>
   </mat-form-field>
   <div class="chart-doughnut mt-7">
-    <custom-chart></custom-chart>
+    <custom-chart [sortedExpenses]="sortedExpensesByCategory"></custom-chart>
   </div>
 </div>

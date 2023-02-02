@@ -15,7 +15,7 @@ export class ExpensesService {
 
   constructor(private afs: AngularFirestore) {}
 
-  getFilteredExpenses(uid: string, filter: ExpenseCategory | '', sortData: Sort) {
+  getFilteredExpenses(uid: string, filter: ExpenseCategory | '', sortData: Sort): Observable<Expense[]> {
     if (filter) {
       return this.userCollection
         .doc(`${uid}`)
