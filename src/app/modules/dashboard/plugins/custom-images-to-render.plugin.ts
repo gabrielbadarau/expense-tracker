@@ -1,10 +1,10 @@
 const smallImageURLs = [
   'assets/images/small/clothing.png',
   'assets/images/small/clothing.png',
-  'https://i.stack.imgur.com/3KRtW.png',
-  'https://i.stack.imgur.com/iLyVi.png',
-  'https://i.stack.imgur.com/2RAv2.png',
-  'https://i.stack.imgur.com/Tq5DA.png',
+  'assets/images/small/clothing.png',
+  'assets/images/small/clothing.png',
+  'assets/images/small/clothing.png',
+  'assets/images/small/clothing.png',
   'assets/images/small/clothing.png',
   'assets/images/small/clothing.png',
   'assets/images/small/clothing.png',
@@ -16,16 +16,16 @@ const smallImageURLs = [
 const bigImageURLs = [
   'assets/images/big/clothing.png',
   'assets/images/big/clothing.png',
-  'https://i.stack.imgur.com/3KRtW.png',
-  'https://i.stack.imgur.com/iLyVi.png',
-  'https://i.stack.imgur.com/2RAv2.png',
-  'https://i.stack.imgur.com/Tq5DA.png',
   'assets/images/big/clothing.png',
   'assets/images/big/clothing.png',
   'assets/images/big/clothing.png',
   'assets/images/big/clothing.png',
   'assets/images/big/clothing.png',
   'assets/images/big/clothing.png',
+  'assets/images/big/clothing.png',
+  'assets/images/big/clothing.png',
+  'assets/images/big/clothing.png',
+  'assets/images/big/beauty.png',
 ];
 
 export const customImagesToRenderPlugin = {
@@ -33,16 +33,18 @@ export const customImagesToRenderPlugin = {
   afterDatasetsDraw: (chart: any) => {
     let images: any = [];
     let ctx = chart.ctx;
+    let chartArea = chart.chartArea;
     ctx.save();
 
-    images = (chart.canvas.width <= 530 ? smallImageURLs : bigImageURLs).map((v) => {
+    images = (chartArea.width <= 420 ? smallImageURLs : bigImageURLs).map((v) => {
       let image = new Image();
       image.src = v;
       return image;
     });
 
-    let xCenter = chart.canvas.width / 2;
-    let yCenter = chart.canvas.height / 2;
+    let xCenter = chartArea.width / 2 + chartArea.width / 40.6;
+    let yCenter = chartArea.height / 2 + chartArea.width / 40.6;
+
     let data = chart.config.data.datasets[0].data;
     let vTotal = data.reduce((a: any, b: any) => a + b, 0);
     data.forEach((v: any, i: any) => {
@@ -55,11 +57,10 @@ export const customImagesToRenderPlugin = {
       ctx.translate(x, y);
       let image = images[i];
 
-      if (vTotal - vAngle > 80) {
+      if (vTotal - vAngle > 60) {
         ctx.drawImage(image, -image.width / 2, -image.height / 2);
-        ctx.translate(-x, -y);
       }
+      ctx.translate(-x, -y);
     });
-    ctx.restore();
   },
 };

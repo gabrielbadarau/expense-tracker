@@ -6,11 +6,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { defer, Observable } from 'rxjs';
 
-import { Expense } from '../../shared/model/expense.model';
+import { Expense } from '../model/expense.model';
 import { ExpenseCategory } from '../model/expense-category.model';
 
 @Injectable()
-export class ExpensesService {
+export class ChartService {
   userCollection = this.afs.collection('/users');
 
   constructor(private afs: AngularFirestore) {}
