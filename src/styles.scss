@@ -104,3 +104,11 @@ body {
 button .mat-mdc-progress-spinner {
   --mdc-circular-progress-active-indicator-color: white;
 }
+
+.mat-mdc-button .mdc-button__label,
+.mat-mdc-unelevated-button .mdc-button__label,
+.mat-mdc-raised-button .mdc-button__label,
+.mat-mdc-outlined-button .mdc-button__label {
+  font-weight: 600;
+  font-size: medium;
+}

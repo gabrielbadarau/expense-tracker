@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LayoutComponent } from './layout/layout.component';
 import { ExpensesPage } from './pages/expenses/expenses.page';
+import { ChartsPage } from './pages/charts/charts.page';
 import { AddEditExpense } from './components/add-edit-expense/add-edit-expense.component';
 
 import { FormMode } from '../../shared/model/form-mode.model';
@@ -29,6 +30,10 @@ const routes: Routes = [
         data: {
           formMode: FormMode.EDIT,
         },
+      },
+      {
+        path: 'view-charts',
+        component: ChartsPage,
       },
     ],
   },

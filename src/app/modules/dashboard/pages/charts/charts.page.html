@@ -1,0 +1,19 @@
+<div class="h-full py-5 flex flex-col flex-nowrap justify-center content-center items-center">
+  <mat-form-field hideRequiredMarker="true" appearance="outline">
+    <mat-label class="text-lg font-medium">Enter a date range</mat-label>
+    <mat-date-range-input [max]="maxDateCalendar" [formGroup]="range" [rangePicker]="picker">
+      <input #input matStartDate formControlName="start" (focus)="picker.open()" autocomplete="off" readonly />
+      <input #input matEndDate formControlName="end" (focus)="picker.open()" autocomplete="off" readonly />
+    </mat-date-range-input>
+
+    <mat-error *ngIf="range.get('start')?.hasError('required')">Please choose a start date. </mat-error>
+    <mat-error *ngIf="range.get('end')?.hasError('required')">Please choose an end date.</mat-error>
+
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker (closed)="onCalendarClose()" restoreFocus="true" #picker touchUi></mat-date-range-picker>
+  </mat-form-field>
+
+  <ng-container *ngIf="chartData$ | async as data">
+    <custom-chart *ngIf="data.length" class="chart-doughnut mt-7" [sortedExpenses]="data"></custom-chart>
+  </ng-container>
+</div>

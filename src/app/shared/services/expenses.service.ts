@@ -9,15 +9,13 @@ import { defer, Observable } from 'rxjs';
 import { Expense } from '../../shared/model/expense.model';
 import { ExpenseCategory } from '../model/expense-category.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ExpensesService {
   userCollection = this.afs.collection('/users');
 
   constructor(private afs: AngularFirestore) {}
 
-  getFilteredExpenses(uid: string, filter: ExpenseCategory | '', sortData: Sort) {
+  getFilteredExpenses(uid: string, filter: ExpenseCategory | '', sortData: Sort): Observable<Expense[]> {
     if (filter) {
       return this.userCollection
         .doc(`${uid}`)
