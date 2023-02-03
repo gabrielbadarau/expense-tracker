@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
-import { catchError, map, Observable, of, switchMap } from 'rxjs';
+import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 
 import { ChartService } from '../../../../shared/services/chart.service';
 import { AuthService } from '../../../../shared/services/auth.service';
@@ -19,6 +19,7 @@ export class ChartsPage {
   chartData$!: Observable<{ [key: string]: string | number }[]>;
   maxDateCalendar = new Date();
   range!: FormGroup;
+  isLoading = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,11 +39,15 @@ export class ChartsPage {
       }),
       switchMap((range) => {
         if (range) {
+          this.isLoading = true;
+
           return this.chartService.getExpensesRange(this.authService.uid, range.start, range.end).pipe(
             untilDestroyed(this),
+            tap(() => (this.isLoading = false)),
             map((expenses) => this.chartService.getExpenseCategoryArray(expenses)),
             catchError((error) => {
               this.snackBarService.openServiceErrorSnackBar(error.message);
+              this.isLoading = false;
               console.error(error);
               return of([]);
             })

@@ -14,7 +14,7 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: '',
+        path: 'home',
         component: ExpensesPage,
       },
       {
@@ -34,6 +34,11 @@ const routes: Routes = [
       {
         path: 'view-charts',
         component: ChartsPage,
+      },
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
       },
     ],
   },
