@@ -35,16 +35,18 @@ export class LayoutComponent implements OnInit {
     this.authService
       .logout()
       .pipe(
-        tap(async () => {
+        tap(() => {
           this.router.navigate(['/login']);
 
           const endTime = new Date().getTime();
 
-          await this.analytics.logEvent('session_length', {
-            userName: this.userName,
-            uid: this.authService.uid,
-            duration: endTime - this.startTime,
-          });
+          this.analytics
+            .logEvent('session_length', {
+              userName: this.userName,
+              uid: this.authService.uid,
+              duration: endTime - this.startTime,
+            })
+            .then(() => console.log('Logged event'));
         }),
         catchError((error) => of(this.snackBarService.openServiceErrorSnackBar(error.message)))
       )
