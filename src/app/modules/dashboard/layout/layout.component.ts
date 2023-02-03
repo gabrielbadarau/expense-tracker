@@ -40,7 +40,7 @@ export class LayoutComponent implements OnInit {
 
           const endTime = new Date().getTime();
 
-          this.analytics.logEvent(`${endTime - this.startTime}`, {
+          this.analytics.logEvent('session_length', {
             userName: this.userName,
             uid: this.authService.uid,
             duration: endTime - this.startTime,
