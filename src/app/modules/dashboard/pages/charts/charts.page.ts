@@ -19,6 +19,7 @@ export class ChartsPage {
   chartData$!: Observable<{ [key: string]: string | number }[]>;
   maxDateCalendar = new Date();
   range!: FormGroup;
+  sumOfExpensesAmounts = 0;
   isLoading = false;
 
   constructor(
@@ -44,7 +45,14 @@ export class ChartsPage {
           return this.chartService.getExpensesRange(this.authService.uid, range.start, range.end).pipe(
             untilDestroyed(this),
             tap(() => (this.isLoading = false)),
-            map((expenses) => this.chartService.getExpenseCategoryArray(expenses)),
+            map((expenses) => {
+              this.sumOfExpensesAmounts = expenses.reduce((acc, curr) => (acc += curr.amount), 0);
+              if (this.sumOfExpensesAmounts === 0) {
+                this.snackBarService.openErrorSnackBar('No expenses found in this range.');
+              }
+
+              return this.chartService.getExpenseCategoryArray(expenses);
+            }),
             catchError((error) => {
               this.snackBarService.openServiceErrorSnackBar(error.message);
               this.isLoading = false;

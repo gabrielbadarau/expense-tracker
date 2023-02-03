@@ -15,7 +15,7 @@
 
   <ng-container *ngIf="chartData$ | async as data">
     <ng-container *ngIf="!isLoading; else spinner">
-      <custom-chart *ngIf="data.length" class="chart-doughnut mt-7" [sortedExpenses]="data"></custom-chart>
+      <custom-chart *ngIf="sumOfExpensesAmounts" class="chart-doughnut mt-7" [sortedExpenses]="data"></custom-chart>
     </ng-container>
     <ng-template #spinner>
       <mat-spinner class="mx-auto mt-14" strokeWidth="8" diameter="100"></mat-spinner>
