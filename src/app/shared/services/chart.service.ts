@@ -42,7 +42,7 @@ export class ChartService {
       const foundIndex = expenseCategoryArray.findIndex((item) => item['category'] === expense.category);
 
       if (foundIndex) {
-        (expenseCategoryArray[foundIndex]['number'] as number)++;
+        (expenseCategoryArray[foundIndex]['number'] as number) += expense.amount;
       }
     });
 
@@ -54,5 +54,29 @@ export class ChartService {
     });
 
     return expenseCategoryArray;
+  }
+
+  getSortedCategories(
+    expenses: {
+      [key: string]: string | number;
+    }[]
+  ) {
+    return expenses.reduce((acc, curr) => {
+      acc.push(curr['category'] as string);
+
+      return acc;
+    }, [] as Array<string>);
+  }
+
+  getSortedAmounts(
+    expenses: {
+      [key: string]: string | number;
+    }[]
+  ) {
+    return expenses.reduce((acc, curr) => {
+      acc.push(curr['number'] as number);
+
+      return acc;
+    }, [] as Array<number>);
   }
 }

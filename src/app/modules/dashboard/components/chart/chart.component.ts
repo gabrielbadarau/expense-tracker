@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-import { ExpenseCategory } from '../../../../shared/model/expense-category.model';
+import { ChartService } from '../../../../shared/services/chart.service';
 
 import { clickLabelPlugin } from '../../plugins/click-label.plugin';
 import { customImagesToRenderPlugin } from '../../plugins/custom-images-to-render.plugin';
@@ -12,24 +12,42 @@ import { customImagesToRenderPlugin } from '../../plugins/custom-images-to-rende
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss'],
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent {
   @Input() set sortedExpenses(
     value: {
       [key: string]: string | number;
     }[]
   ) {
-    console.log(value)
+    this._sortedExpenses = value;
+
+    if (this.chart) {
+      this.chart.data.datasets[0].data = this.chartService.getSortedAmounts(value);
+      this.chart.data.datasets[0].labels = this.chartService.getSortedCategories(value);
+      this.chart.update();
+    } else {
+      this.createChart(value);
+    }
+  }
+
+  get sortedExpenses(): {
+    [key: string]: string | number;
+  }[] {
+    return this._sortedExpenses;
   }
 
   chart: any;
 
-  constructor() {}
+  constructor(private chartService: ChartService) {}
 
-  ngOnInit(): void {
-    this.createChart();
-  }
+  private _sortedExpenses!: {
+    [key: string]: string | number;
+  }[];
 
-  createChart() {
+  createChart(
+    expenses: {
+      [key: string]: string | number;
+    }[]
+  ) {
     const backgroundColors = [
       '#6F8659',
       '#6D5986',
@@ -50,16 +68,16 @@ export class ChartComponent implements OnInit {
       data: {
         datasets: [
           {
-            data: [900, 800, 700, 600, 500, 400, 300, 200, 200, 0, 0, 0],
+            data: this.chartService.getSortedAmounts(expenses),
             backgroundColor: backgroundColors,
             hoverBackgroundColor: backgroundColors,
           },
         ],
-        labels: Object.values(ExpenseCategory),
+        labels: this.chartService.getSortedCategories(expenses),
       },
       options: {
         layout: {
-          padding: 15,
+          padding: 20,
         },
         events: ['click'],
         responsive: true,
@@ -79,8 +97,16 @@ export class ChartComponent implements OnInit {
             },
             padding: 6,
             display: function (context) {
-              const value = context.dataset.data[context.dataIndex] as number;
-              return value <= 100 ? false : true;
+              const dataSet = context.dataset.data as Number[];
+              const sum = dataSet.reduce((accumulator, currentValue) => {
+                const acc = accumulator as number;
+                const cur = currentValue as number;
+                return acc + cur;
+              }, 0);
+
+              const percentage = ((context.dataset.data[context.dataIndex] as number) * 100) / (sum as number);
+
+              return percentage <= 3 ? false : true;
             },
             formatter: function (value, context) {
               const dataSet = context.dataset.data as Number[];

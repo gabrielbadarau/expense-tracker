@@ -22,14 +22,14 @@ export const clickLabelPlugin = {
 
       // draw circle
       ctx.beginPath();
-      ctx.arc(width / 2 + 15, height / 2 + 15, height / 4.1, 0, 2 * Math.PI);
+      ctx.arc(width / 2 + 20, height / 2 + 20, height / 4.1, 0, 2 * Math.PI);
       ctx.fill();
 
       // draw text inside circle
       ctx.fillStyle = 'white';
-      ctx.fillText(labelName, width / 2 + 15, height / 2 + top - height / 13);
-      ctx.fillText(value, width / 2 + 15, height / 2 + top);
-      ctx.fillText('RON', width / 2 + 15, height / 2 + top + height / 13);
+      ctx.fillText(labelName, width / 2 + 20, height / 2 + top - height / 13);
+      ctx.fillText(value, width / 2 + 20, height / 2 + top);
+      ctx.fillText('RON', width / 2 + 20, height / 2 + top + height / 13);
 
       ctx.restore();
     } else {
@@ -41,8 +41,8 @@ export const clickLabelPlugin = {
       ctx.fillStyle = 'black';
 
       // draw text inside circle
-      ctx.fillText(sum, width / 2 + 15, height / 2 + top - height / 32);
-      ctx.fillText('RON', width / 2 + 15, height / 2 + top + height / 18);
+      ctx.fillText(sum, width / 2 + 20, height / 2 + top - height / 32);
+      ctx.fillText('RON', width / 2 + 20, height / 2 + top + height / 18);
       ctx.restore();
     }
   },

@@ -2,24 +2,8 @@
   <mat-form-field hideRequiredMarker="true" appearance="outline">
     <mat-label class="text-lg font-medium">Enter a date range</mat-label>
     <mat-date-range-input [max]="maxDateCalendar" [formGroup]="range" [rangePicker]="picker">
-      <input
-        #input
-        matStartDate
-        formControlName="start"
-        placeholder="Start date"
-        (focus)="picker.open()"
-        autocomplete="off"
-        readonly
-      />
-      <input
-        #input
-        matEndDate
-        formControlName="end"
-        placeholder="End date"
-        (focus)="picker.open()"
-        autocomplete="off"
-        readonly
-      />
+      <input #input matStartDate formControlName="start" (focus)="picker.open()" autocomplete="off" readonly />
+      <input #input matEndDate formControlName="end" (focus)="picker.open()" autocomplete="off" readonly />
     </mat-date-range-input>
 
     <mat-error *ngIf="range.get('start')?.hasError('required')">Please choose a start date. </mat-error>
@@ -28,7 +12,8 @@
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-date-range-picker (closed)="onCalendarClose()" restoreFocus="true" #picker touchUi></mat-date-range-picker>
   </mat-form-field>
-  <div class="chart-doughnut mt-7">
-    <custom-chart [sortedExpenses]="sortedExpensesByCategory"></custom-chart>
-  </div>
+
+  <ng-container *ngIf="chartData$ | async as data">
+    <custom-chart *ngIf="data.length" class="chart-doughnut mt-7" [sortedExpenses]="data"></custom-chart>
+  </ng-container>
 </div>
