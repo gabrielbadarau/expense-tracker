@@ -35,12 +35,12 @@ export class LayoutComponent implements OnInit {
     this.authService
       .logout()
       .pipe(
-        tap(() => {
+        tap(async () => {
           this.router.navigate(['/login']);
 
           const endTime = new Date().getTime();
 
-          this.analytics.logEvent('session_length', {
+          await this.analytics.logEvent('session_length', {
             userName: this.userName,
             uid: this.authService.uid,
             duration: endTime - this.startTime,
