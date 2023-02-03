@@ -21,7 +21,7 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 
 // firebase setup
 import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAnalyticsModule } from '@angular/fire/compat/analytics';
+import { AngularFireAnalyticsModule, ScreenTrackingService, UserTrackingService } from '@angular/fire/compat/analytics';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireAuthModule, PERSISTENCE } from '@angular/fire/compat/auth';
 import { environment } from '../environments/environment';
@@ -47,7 +47,7 @@ import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/compat/fir
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    // AngularFireAnalyticsModule
+    AngularFireAnalyticsModule,
   ],
   providers: [
     VerifiedEmailGuard,
@@ -59,6 +59,10 @@ import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/compat/fir
     // firebase emulator
     // { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['http://localhost:9099'] : undefined },
     { provide: USE_FIRESTORE_EMULATOR, useValue: environment.useEmulators ? ['localhost', 8080] : undefined },
+
+    // analytics
+    ScreenTrackingService,
+    UserTrackingService,
   ],
   bootstrap: [AppComponent],
 })
