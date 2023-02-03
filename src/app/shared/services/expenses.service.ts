@@ -42,10 +42,9 @@ export class ExpensesService {
   createExpense(uid: string, expense: Expense) {
     const id = uuidv4();
 
-    //    .doc(`${uid}`)
     return defer(() =>
       this.userCollection
-        .doc('oHqTzisD5xgqp6NoljUZ5HA6z4C2')
+        .doc(`${uid}`)
         .collection('expenses')
         .doc(id)
         .set({ ...expense, id })
