@@ -3,8 +3,7 @@
     <div class="flex flex-nowrap">
       <button
         routerLinkActive="active-header shadow"
-        [routerLinkActiveOptions]="{ exact: true }"
-        routerLink="/dashboard"
+        routerLink="/dashboard/home"
         class="font-medium mr-5 flex items-center mb-0 p-1 rounded-lg"
       >
         <mat-icon class="md:!inline-block !hidden" svgIcon="dashboard"></mat-icon>
@@ -12,7 +11,6 @@
       </button>
       <button
         routerLinkActive="active-header shadow"
-        [routerLinkActiveOptions]="{ exact: true }"
         routerLink="/dashboard/add-expense"
         class="font-medium mr-5 flex items-center mb-0 p-1 rounded-lg"
       >
@@ -65,9 +63,8 @@
 
       <div class="mt-10 px-1">
         <a
-          routerLink="/dashboard"
+          routerLink="/dashboard/home"
           routerLinkActive="active !text-white"
-          [routerLinkActiveOptions]="{ exact: true }"
           class="text-gray-800 flex items-center px-2 py-2 text-lg font-semibold rounded-md"
         >
           <mat-icon svgIcon="dashboard"></mat-icon>
@@ -76,7 +73,6 @@
         <a
           routerLink="/dashboard/add-expense"
           routerLinkActive="active !text-white"
-          [routerLinkActiveOptions]="{ exact: true }"
           class="text-gray-800 flex items-center px-2 py-2 text-lg font-semibold rounded-md"
         >
           <mat-icon svgIcon="add"></mat-icon>
